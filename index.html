@@ -24,13 +24,15 @@
       --font:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;font-size:17.5px}
     body{font-family:var(--font);color:var(--text);background:#f7fbfc;line-height:1.7}
+    @media(max-width:760px){html{font-size:16px}}
 
     /* ══ NAV ══ */
     #top-nav{position:sticky;top:0;z-index:100;background:var(--navy);box-shadow:0 2px 10px rgba(27,58,92,.22)}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:52px}
-    .nav-logo{color:var(--teal);font-weight:700;font-size:.88rem;letter-spacing:.03em;white-space:nowrap;flex-shrink:0}
+    .nav-logo{color:var(--teal);font-weight:700;font-size:.88rem;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:.55rem}
+    .nav-logo img{height:32px;width:auto;display:block}
     .nav-links{display:flex;list-style:none;gap:0}
     .nav-links a{display:block;padding:.35rem .75rem;color:#b8cfe0;text-decoration:none;font-size:.78rem;border-radius:6px;transition:background .2s,color .2s;white-space:nowrap}
     .nav-links a:hover{background:rgba(91,191,181,.18);color:#fff}
@@ -269,7 +271,7 @@
 <!-- ══ NAV ══ -->
 <nav id="top-nav" role="navigation">
   <div class="nav-inner">
-    <span class="nav-logo">台灣醫事聯合臨床技能發展學會</span>
+    <span class="nav-logo"><img src="images/LOGO-TSMCSD.png" alt="台灣醫事聯合臨床技能發展學會 LOGO">台灣醫事聯合臨床技能發展學會</span>
     <button class="nav-burger" id="burger" aria-label="選單">&#9776;</button>
     <ul class="nav-links" id="nav-menu">
       <li><a href="#about">活動資訊</a></li>
@@ -279,7 +281,7 @@
       <li><a href="#register">立即報名</a></li>
       <li><a href="#transport">交通資訊</a></li>
       <li><a href="#contact">聯絡資訊</a></li>
-      <li><a href="#" class="nav-poster" onclick="alert('海報下載連結請替換此處 URL');return false;">海報下載</a></li>
+      <li><a href="images/1150718海報.pdf" class="nav-poster" target="_blank" rel="noopener">海報下載</a></li>
     </ul>
   </div>
 </nav>
