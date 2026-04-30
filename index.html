@@ -25,13 +25,13 @@
       --font:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;font-size:17.5px}
+    html{scroll-behavior:smooth;font-size:21px}
     body{font-family:var(--font);color:var(--text);background:#f7fbfc;line-height:1.7}
-    @media(max-width:760px){html{font-size:16px}}
+    @media(max-width:760px){html{font-size:17px}}
 
     /* ══ NAV ══ */
     #top-nav{position:sticky;top:0;z-index:100;background:var(--navy);box-shadow:0 2px 10px rgba(27,58,92,.22)}
-    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:52px}
+    .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px}
     .nav-logo{color:var(--teal);font-weight:700;font-size:.88rem;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:.6rem}
     .nav-logo img{height:34px;width:34px;display:block;background:#fff;border-radius:50%;padding:3px;box-shadow:0 0 0 2px rgba(91,191,181,.45);object-fit:contain}
     .nav-links{display:flex;list-style:none;gap:0}
@@ -48,9 +48,9 @@
     }
 
     /* ══ HERO ══ */
-    #hero{background:#fff;padding:4.5rem 2rem 3.5rem;position:relative;overflow:hidden;border-bottom:1px solid #e4eff4}
+    #hero{background:#fff;border-bottom:1px solid #e4eff4;position:relative;overflow:hidden}
     #hero::after{content:'';position:absolute;top:0;right:0;width:46%;height:100%;background:linear-gradient(160deg,var(--lt-teal) 0%,#d4eef4 100%);clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);pointer-events:none;z-index:0}
-    .hero-inner{max-width:1100px;margin:0 auto;position:relative}
+    .hero-inner{max-width:1280px;margin:0 auto;padding:4.5rem 1.5rem 3.5rem;position:relative}
     /* hero right decoration — 2×2 card grid */
     .hero-deco{
       position:absolute;top:0;right:0;width:46%;height:100%;z-index:1;pointer-events:none;
@@ -77,7 +77,7 @@
     }
     .hd-gc-label{font-size:.72rem;font-weight:700;color:var(--navy);line-height:1.35}
     @media(max-width:580px){.hero-deco{display:none}#hero::after{display:none}}
-    .hero-content{position:relative;z-index:1;max-width:540px}
+    .hero-content{position:relative;z-index:1;max-width:580px}
     .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--lt-teal);border:1px solid rgba(91,191,181,.35);color:var(--teal-dark);padding:.24rem .88rem;border-radius:20px;font-size:.74rem;letter-spacing:.08em;font-weight:600;margin-bottom:1.2rem}
     .hero-title{font-size:clamp(1.9rem,5vw,3.1rem);font-weight:900;color:var(--navy);letter-spacing:.03em;line-height:1.15;margin-bottom:.55rem}
     .hero-title .x-accent{color:var(--teal)}
@@ -99,9 +99,9 @@
     #cd-done{display:none;font-size:.78rem;font-weight:700;color:var(--teal-dark)}
 
     /* ══ SECTION ══ */
-    .section{padding:3.8rem 1.5rem}
+    .section{padding:4.2rem 2rem}
     .section-alt{background:var(--light-bg)}
-    .section-inner{max-width:1000px;margin:0 auto}
+    .section-inner{max-width:1180px;margin:0 auto}
     .sec-hd{text-align:center;margin-bottom:2.4rem}
     .sec-eye{font-size:.7rem;font-weight:700;letter-spacing:.16em;color:var(--teal-dark);text-transform:uppercase;margin-bottom:.4rem}
     .sec-title{font-size:clamp(1.25rem,2.8vw,1.75rem);font-weight:900;color:var(--navy);display:inline-block;position:relative}
@@ -290,7 +290,8 @@
 
 <!-- ══ HERO ══ -->
 <section id="hero">
-  <!-- 右側裝飾：direct child of #hero，才能正確相對 #hero 定位 -->
+  <div class="hero-inner">
+  <!-- 右側裝飾：inside .hero-inner，對齊 nav 左右邊界 -->
   <div class="hero-deco" aria-hidden="true">
     <div class="hd-dots"></div>
     <div class="hd-grid">
@@ -340,7 +341,6 @@
     </div>
   </div>
 
-  <div class="hero-inner">
   <div class="hero-content">
     <div class="hero-badge">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
