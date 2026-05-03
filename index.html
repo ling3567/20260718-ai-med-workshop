@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
+<!-- saved from url=(0052)https://ling3567.github.io/20260718-ai-med-workshop/ -->
+<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI × 醫學教學應用工作坊 | 115年7月18日</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link href="./index_files/css2" rel="stylesheet">
   <style>
     :root {
       --teal:      #5BBFB5;
@@ -35,16 +34,29 @@
     .nav-logo{color:var(--teal);font-weight:700;font-size:.88rem;letter-spacing:.03em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:.6rem}
     .nav-logo img{height:34px;width:34px;display:block;background:#fff;border-radius:50%;padding:3px;box-shadow:0 0 0 2px rgba(91,191,181,.45);object-fit:contain}
     .nav-links{display:flex;list-style:none;gap:0}
-    .nav-links a{display:block;padding:.35rem .75rem;color:#b8cfe0;text-decoration:none;font-size:.78rem;border-radius:6px;transition:background .2s,color .2s;white-space:nowrap}
+    .nav-links a{display:block;padding:.35rem .65rem;color:#b8cfe0;text-decoration:none;font-size:.76rem;border-radius:6px;transition:background .2s,color .2s;white-space:nowrap}
     .nav-links a:hover{background:rgba(91,191,181,.18);color:#fff}
     .nav-links a.nav-poster{background:rgba(91,191,181,.15);color:var(--teal);border:1px solid rgba(91,191,181,.3);border-radius:12px;margin-left:.3rem}
     .nav-links a.nav-poster:hover{background:rgba(91,191,181,.3)}
     .nav-burger{display:none;background:none;border:none;cursor:pointer;padding:6px;color:#fff;font-size:1.4rem;line-height:1}
-    @media(max-width:760px){
-      .nav-links{display:none;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:var(--navy);padding:.5rem 1rem 1rem;gap:2px}
+    /* 中螢幕：縮短學會名稱字級，避免擠到 nav links */
+    @media(max-width:1280px){
+      .nav-logo{font-size:.82rem}
+      .nav-logo img{height:30px;width:30px}
+      .nav-links a{padding:.35rem .55rem;font-size:.73rem}
+    }
+    /* 較窄筆電以下：直接收成漢堡選單 */
+    @media(max-width:1080px){
+      .nav-links{display:none;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:var(--navy);padding:.5rem 1rem 1rem;gap:2px}
       .nav-links.open{display:flex}
+      .nav-links a{padding:.55rem .8rem;font-size:.86rem}
+      .nav-links a.nav-poster{margin-left:0;margin-top:.3rem}
       .nav-burger{display:block}
-      .nav-logo{font-size:.8rem}
+      .nav-logo{font-size:.85rem}
+    }
+    @media(max-width:560px){
+      .nav-logo{font-size:.78rem}
+      .nav-logo img{height:28px;width:28px}
     }
 
     /* ══ HERO ══ */
@@ -173,9 +185,14 @@
     input[type="text"],input[type="email"],input[type="tel"],select,textarea{width:100%;padding:.6rem .85rem;border:1.5px solid var(--border);border-radius:9px;font-size:.87rem;font-family:var(--font);color:var(--text);background:#fdffff;transition:border-color .2s,box-shadow .2s;outline:none;appearance:none}
     input:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(91,191,181,.16)}
     select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235BBFB5' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.1rem;cursor:pointer}
-    .radio-group{display:flex;gap:1.2rem;margin-top:.2rem}
-    .radio-label{display:flex;align-items:center;gap:.4rem;font-size:.87rem;font-weight:400;color:var(--text);cursor:pointer}
+    .radio-group{display:flex;flex-wrap:wrap;gap:.55rem 1.2rem;margin-top:.2rem}
+    .radio-label{display:flex;align-items:center;gap:.4rem;font-size:.87rem;font-weight:400;color:var(--text);cursor:pointer;white-space:nowrap}
     .radio-label input[type="radio"]{width:15px;height:15px;accent-color:var(--teal)}
+    @media(max-width:560px){
+      .radio-group{flex-direction:column;gap:.6rem}
+      .radio-label{padding:.55rem .8rem;background:#f7fbfc;border:1px solid var(--border);border-radius:10px;width:100%}
+      .radio-label:has(input:checked){background:var(--lt-teal);border-color:var(--teal)}
+    }
     .form-hint{font-size:.71rem;color:var(--text-muted);margin-top:.22rem}
     #other-profession-wrap{margin-top:.52rem;display:none}
     .form-notice-box{display:flex;align-items:flex-start;gap:.55rem;background:#f0f9f8;border:1px solid rgba(91,191,181,.4);border-radius:10px;padding:.82rem 1rem;font-size:.8rem;color:var(--teal-dark);line-height:1.6;margin-top:1.1rem}
@@ -273,16 +290,16 @@
 <!-- ══ NAV ══ -->
 <nav id="top-nav" role="navigation">
   <div class="nav-inner">
-    <span class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="台灣醫事聯合臨床技能發展學會 LOGO">台灣醫事聯合臨床技能發展學會</span>
-    <button class="nav-burger" id="burger" aria-label="選單">&#9776;</button>
+    <span class="nav-logo"><img src="./index_files/logo.png" alt="台灣醫事聯合臨床技能發展學會 LOGO">台灣醫事聯合臨床技能發展學會</span>
+    <button class="nav-burger" id="burger" aria-label="選單">☰</button>
     <ul class="nav-links" id="nav-menu">
-      <li><a href="#about">活動資訊</a></li>
-      <li><a href="#agenda">活動議程</a></li>
-      <li><a href="#speakers">講師介紹</a></li>
-      <li><a href="#reg-info">報名資訊</a></li>
-      <li><a href="#register">立即報名</a></li>
-      <li><a href="#transport">交通資訊</a></li>
-      <li><a href="#contact">聯絡資訊</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#about">活動資訊</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#agenda">活動議程</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#speakers">講師介紹</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#reg-info">報名資訊</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#register">立即報名</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#transport">交通資訊</a></li>
+      <li><a href="https://ling3567.github.io/20260718-ai-med-workshop/#contact">聯絡資訊</a></li>
       <li><a href="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/1150718%E6%B5%B7%E5%A0%B1.pdf" class="nav-poster" target="_blank" rel="noopener">海報下載</a></li>
     </ul>
   </div>
@@ -299,9 +316,9 @@
       <div class="hd-gc">
         <div class="hd-gc-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="4"/>
-            <path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
-            <path d="M12 12v2"/>
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"></path>
+            <path d="M12 12v2"></path>
           </svg>
         </div>
         <span class="hd-gc-label">生成式 AI<br>基礎概念</span>
@@ -310,9 +327,9 @@
       <div class="hd-gc">
         <div class="hd-gc-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2"/>
-            <polyline points="8 21 12 17 16 21"/>
-            <path d="M9 10l2 2 4-4"/>
+            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+            <polyline points="8 21 12 17 16 21"></polyline>
+            <path d="M9 10l2 2 4-4"></path>
           </svg>
         </div>
         <span class="hd-gc-label">人機協作<br>實務應用</span>
@@ -321,8 +338,8 @@
       <div class="hd-gc">
         <div class="hd-gc-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
-            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"></path>
           </svg>
         </div>
         <span class="hd-gc-label">AI 融入<br>教學設計</span>
@@ -331,9 +348,9 @@
       <div class="hd-gc">
         <div class="hd-gc-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
           </svg>
         </div>
         <span class="hd-gc-label">分組實作<br>成果分享</span>
@@ -343,24 +360,24 @@
 
   <div class="hero-content">
     <div class="hero-badge">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
       限額50名
     </div>
     <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學<br>應用工作坊</h1>
     <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
     <p class="hero-slogan">善用 AI 工具，優化教學設計流程</p>
     <div class="hero-cta">
-      <a href="#register" class="btn-fill">立即報名</a>
+      <a href="https://ling3567.github.io/20260718-ai-med-workshop/#register" class="btn-fill">立即報名</a>
     </div>
 
     <!-- 倒數：小巧，放在 hero 下方 -->
     <div class="cd-strip">
       <span class="cd-label">距離活動</span>
       <div class="cd-boxes" id="cd-boxes">
-        <div class="cbox"><div class="cbox-num" id="cd-d">--</div><div class="cbox-unit">天</div></div>
-        <div class="cbox"><div class="cbox-num" id="cd-h">--</div><div class="cbox-unit">時</div></div>
-        <div class="cbox"><div class="cbox-num" id="cd-m">--</div><div class="cbox-unit">分</div></div>
-        <div class="cbox"><div class="cbox-num" id="cd-s">--</div><div class="cbox-unit">秒</div></div>
+        <div class="cbox"><div class="cbox-num" id="cd-d">75</div><div class="cbox-unit">天</div></div>
+        <div class="cbox"><div class="cbox-num" id="cd-h">17</div><div class="cbox-unit">時</div></div>
+        <div class="cbox"><div class="cbox-num" id="cd-m">23</div><div class="cbox-unit">分</div></div>
+        <div class="cbox"><div class="cbox-num" id="cd-s">30</div><div class="cbox-unit">秒</div></div>
       </div>
       <span id="cd-done"></span>
     </div>
@@ -384,7 +401,7 @@
         <ul class="fact-list">
           <li class="fact-item">
             <div class="fact-circle">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             </div>
             <div class="fact-body">
               <div class="fact-main">115年7月18日（星期六）</div>
@@ -393,7 +410,7 @@
           </li>
           <li class="fact-item">
             <div class="fact-circle">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             </div>
             <div class="fact-body">
               <div class="fact-main">奇美醫院 第五醫療大樓 5樓 552會議室</div>
@@ -402,7 +419,7 @@
           </li>
           <li class="fact-item">
             <div class="fact-circle">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path></svg>
             </div>
             <div class="fact-body">
               <div class="fact-main">對AI創新教學有興趣之臨床教師</div>
@@ -411,9 +428,9 @@
           </li>
         </ul>
         <div class="about-btns">
-          <a href="#register" class="btn-fill btn-sm">立即報名</a>
-          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=AI+%C3%97+%E9%86%AB%E5%AD%B8%E6%95%99%E5%AD%B8%E6%87%89%E7%94%A8%E5%B7%A5%E4%BD%9C%E5%9D%8A&dates=20260718T131500%2F20260718T173000&details=%E7%94%9F%E6%88%90%E5%BC%8FAI+%C3%97+%E4%BA%BA%E6%A9%9F%E5%8D%94%E4%BD%9C+%C3%97+%E6%95%99%E5%AD%B8%E8%A8%AD%E8%A8%88%E5%AF%A6%E4%BD%9C&location=%E5%A5%87%E7%BE%8E%E9%86%AB%E9%99%A2+552%E6%9C%83%E8%AD%B0%E5%AE%A4" target="_blank" rel="noopener" class="btn-ghost btn-sm">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:middle;margin-right:3px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <a href="https://ling3567.github.io/20260718-ai-med-workshop/#register" class="btn-fill btn-sm">立即報名</a>
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=AI+%C3%97+%E9%86%AB%E5%AD%B8%E6%95%99%E5%AD%B8%E6%87%89%E7%94%A8%E5%B7%A5%E4%BD%9C%E5%9D%8A&amp;dates=20260718T131500%2F20260718T173000&amp;details=%E7%94%9F%E6%88%90%E5%BC%8FAI+%C3%97+%E4%BA%BA%E6%A9%9F%E5%8D%94%E4%BD%9C+%C3%97+%E6%95%99%E5%AD%B8%E8%A8%AD%E8%A8%88%E5%AF%A6%E4%BD%9C&amp;location=%E5%A5%87%E7%BE%8E%E9%86%AB%E9%99%A2+552%E6%9C%83%E8%AD%B0%E5%AE%A4" target="_blank" rel="noopener" class="btn-ghost btn-sm">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="vertical-align:middle;margin-right:3px"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             加入行事曆
           </a>
         </div>
@@ -423,7 +440,7 @@
       <div class="desc-card">
         <div class="desc-card-title">
           <div class="desc-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
           </div>
           關於本工作坊
         </div>
@@ -602,45 +619,45 @@
     </div>
     <div id="reg-form-wrap">
     <div class="form-card">
-      <form id="reg-form" novalidate>
+      <form id="reg-form" novalidate="">
         <div class="form-row">
           <div class="form-group">
             <label for="f-name">姓名 <span class="req">*</span></label>
-            <input type="text" id="f-name" name="name" placeholder="請輸入您的姓名" required>
+            <input type="text" id="f-name" name="name" placeholder="請輸入您的姓名" required="">
           </div>
           <div class="form-group">
             <label for="f-idno">身分證字號 <span class="req">*</span></label>
-            <input type="text" id="f-idno" name="idno" placeholder="學分登錄用；無需學分請填「無需學分」" required>
+            <input type="text" id="f-idno" name="idno" placeholder="學分登錄用；無需學分請填「無需學分」" required="">
             <div class="form-hint">學分登錄用；若無需學分請填「無需學分」</div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="f-org">服務單位 <span class="req">*</span></label>
-            <input type="text" id="f-org" name="org" placeholder="如：奇美醫院" required>
+            <input type="text" id="f-org" name="org" placeholder="如：奇美醫院" required="">
           </div>
           <div class="form-group">
             <label for="f-dept">部門 <span class="req">*</span></label>
-            <input type="text" id="f-dept" name="dept" placeholder="如：營養科" required>
+            <input type="text" id="f-dept" name="dept" placeholder="如：營養科" required="">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="f-title">職稱 <span class="req">*</span></label>
-            <input type="text" id="f-title" name="jobtitle" placeholder="如：營養師" required>
+            <input type="text" id="f-title" name="jobtitle" placeholder="如：營養師" required="">
           </div>
           <div class="form-group">
             <label for="f-phone">聯絡電話／手機 <span class="req">*</span></label>
-            <input type="tel" id="f-phone" name="phone" placeholder="如：0912-345-678" required>
+            <input type="tel" id="f-phone" name="phone" placeholder="如：0912-345-678" required="">
           </div>
         </div>
         <div class="form-group full">
           <label for="f-email">Email <span class="req">*</span></label>
-          <input type="email" id="f-email" name="email" placeholder="請輸入聯絡信箱" required>
+          <input type="email" id="f-email" name="email" placeholder="請輸入聯絡信箱" required="">
         </div>
         <div class="form-group full">
           <label for="f-profession">職類 <span class="req">*</span></label>
-          <select id="f-profession" name="profession" required>
+          <select id="f-profession" name="profession" required="">
             <option value="">── 請選擇職類 ──</option>
             <option>西醫</option><option>牙醫</option><option>中醫</option>
             <option>藥事</option><option>醫事放射</option><option>醫事檢驗</option>
@@ -657,13 +674,13 @@
         <div class="form-group full">
           <label>身分別 <span class="req">*</span></label>
           <div class="radio-group">
-            <label class="radio-label"><input type="radio" name="is_member" value="本會個人會員" required> 本會個人會員</label>
+            <label class="radio-label"><input type="radio" name="is_member" value="本會個人會員" required=""> 本會個人會員</label>
             <label class="radio-label"><input type="radio" name="is_member" value="本會團體會員"> 本會團體會員</label>
             <label class="radio-label"><input type="radio" name="is_member" value="非會員"> 非會員</label>
           </div>
         </div>
         <div class="form-notice-box">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           報名送出後，主辦單位將依您填寫之身分別進行資格確認，並以 Email 通知報名結果與繳費資訊，請留意信件通知。
         </div>
         <div class="form-submit-row">
@@ -673,7 +690,7 @@
       </form>
       <div id="form-success">
         <div class="sico">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
         </div>
         <h3>報名資料已送出！</h3>
         <p>感謝您填寫「AI × 醫學教學應用工作坊」報名表。主辦單位將依您填寫之身分別進行資格確認，並以 Email 通知報名結果與繳費資訊，請留意信件通知。</p>
@@ -697,13 +714,13 @@
       <div class="transport-card">
         <div class="tc-notice">
           <div class="tc-notice-ico">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b07800" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b07800" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
           </div>
           <span>會場停車空間有限，<strong>建議多加搭乘大眾運輸工具</strong></span>
         </div>
 
         <a href="http://www.chimei.org.tw/newindex/map/cmh_map_1.html" target="_blank" rel="noopener" class="tc-link">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
           開啟奇美醫院停車資訊、交通路線圖
         </a>
 
@@ -711,7 +728,7 @@
 
           <li class="tc-row">
             <div class="tc-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="3" width="16" height="13" rx="3"/><path d="M4 10h16M12 3v7"/><circle cx="8" cy="19" r="1.5"/><circle cx="16" cy="19" r="1.5"/><path d="M7 19l-1 2M17 19l1 2"/></svg>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="3" width="16" height="13" rx="3"></rect><path d="M4 10h16M12 3v7"></path><circle cx="8" cy="19" r="1.5"></circle><circle cx="16" cy="19" r="1.5"></circle><path d="M7 19l-1 2M17 19l1 2"></path></svg>
             </div>
             <div class="tc-body">
               <div class="tc-mode">臺　鐵</div>
@@ -721,7 +738,7 @@
 
           <li class="tc-row">
             <div class="tc-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="6" width="20" height="10" rx="3"/><path d="M22 11H2M2 6l2-3h16l2 3"/><circle cx="6.5" cy="19" r="1.5"/><circle cx="17.5" cy="19" r="1.5"/><path d="M5.5 19l-1.5 2M18.5 19l1.5 2"/></svg>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="6" width="20" height="10" rx="3"></rect><path d="M22 11H2M2 6l2-3h16l2 3"></path><circle cx="6.5" cy="19" r="1.5"></circle><circle cx="17.5" cy="19" r="1.5"></circle><path d="M5.5 19l-1.5 2M18.5 19l1.5 2"></path></svg>
             </div>
             <div class="tc-body">
               <div class="tc-mode">高　鐵</div>
@@ -731,7 +748,7 @@
 
           <li class="tc-row">
             <div class="tc-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><path d="M3 17a1 1 0 001 1h1m14-1a1 1 0 01-1 1h-1M1 11l3-6h16l3 6v5a1 1 0 01-1 1H2a1 1 0 01-1-1v-5z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="1.8" stroke-linecap="round"><path d="M3 17a1 1 0 001 1h1m14-1a1 1 0 01-1 1h-1M1 11l3-6h16l3 6v5a1 1 0 01-1 1H2a1 1 0 01-1-1v-5z"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
             </div>
             <div class="tc-body">
               <div class="tc-mode">高速公路</div>
@@ -751,18 +768,16 @@
       <!-- 右：地圖 -->
       <div class="map-card">
         <div class="map-card-head">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3A9D8F" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
           奇美醫院
         </div>
         <div class="map-wrap">
-          <iframe
-            src="https://maps.google.com/maps?q=奇美醫院+台南市永康區中華路901號&t=&z=16&ie=UTF8&iwloc=&output=embed&hl=zh-TW"
-            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="奇美醫院地圖">
+          <iframe src="./index_files/maps.html" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="奇美醫院地圖">
           </iframe>
         </div>
         <div class="map-card-foot">
-          <a href="https://maps.google.com/?q=奇美醫院,台南市永康區中華路901號" target="_blank" rel="noopener" class="map-link">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <a href="https://maps.google.com/?q=%E5%A5%87%E7%BE%8E%E9%86%AB%E9%99%A2,%E5%8F%B0%E5%8D%97%E5%B8%82%E6%B0%B8%E5%BA%B7%E5%8D%80%E4%B8%AD%E8%8F%AF%E8%B7%AF901%E8%99%9F" target="_blank" rel="noopener" class="map-link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             在 Google Maps 開啟
           </a>
         </div>
@@ -800,7 +815,7 @@
           </div>
           <div class="ci-row">
             <span class="ci-lbl">電話</span>
-            <span class="ci-val"><a href="tel:0628128114">06-2812811 #57426</a></span>
+            <span class="ci-val"><a href="tel:+886-6-2812811,57426">06-2812811 #57426</a></span>
           </div>
           <div class="ci-row">
             <span class="ci-lbl">Email</span>
@@ -912,5 +927,6 @@
     });
   });
 </script>
-</body>
-</html>
+
+
+</body></html>
