@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>報到系統｜AI × 醫學教學應用工作坊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ===== 對齊報名網頁色系 ===== */
+  --teal:#5BBFB5;
+  --teal-dark:#3A9D8F;
+  --teal-deep:#2e8078;
+  --navy:#1B3A5C;
+  --light-bg:#E8F4F8;
+  --lt-teal:#EAF8F6;
+  --white:#ffffff;
+  --text:#2c3e50;
+  --text-mid:#4a6070;
+  --text-muted:#7a90a4;
+  --border:#cde4eb;
+  --card-sh:0 2px 14px rgba(91,191,181,.11);
+
+  /* ===== 報到系統用語意變數（映射到上方）===== */
+  --bg:#f7fbfc;
+  --panel:var(--white);
+  --ink:var(--text);
+  --muted:var(--text-muted);
+  --mint:#cfeee9;
+  --mint-soft:var(--lt-teal);
+  --line:var(--border);
+  --amber:#b06a1f;
+  --amber-soft:#fcf3e6;
+  --green:#2e9e6b;
+  --green-soft:#e4f6ec;
+  --red:#c0392b;
+  --shadow:var(--card-sh);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:15px;line-height:1.55;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input{font-family:inherit}
+
+/* ---------- Header ---------- */
+header{
+  background:var(--navy);
+  color:#fff;
+  padding:14px 22px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.hd-logo{
+  width:42px;height:42px;border-radius:50%;flex:none;background:#fff;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.18);
+}
+.hd-logo img{width:100%;height:100%;object-fit:contain;padding:3px}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+.brand .kicker{
+  font-size:11px;letter-spacing:.22em;color:var(--teal);
+  text-transform:uppercase;font-weight:700;
+}
+.brand h1{
+  font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;font-weight:900;
+  font-size:21px;line-height:1.25;letter-spacing:.02em;white-space:nowrap;
+}
+.brand .meta{font-size:12px;color:#aac4d6}
+.hd-spacer{flex:1}
+.hd-stat{
+  display:flex;align-items:baseline;gap:7px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(91,191,181,.45);
+  border-radius:10px;padding:7px 14px;
+}
+.hd-stat b{font-size:24px;font-weight:900;color:var(--teal);font-variant-numeric:tabular-nums}
+.hd-stat span{font-size:12px;color:#aac4d6}
+nav{display:flex;gap:6px}
+nav button{
+  color:#cfe0ec;font-size:14px;font-weight:500;
+  padding:8px 16px;border-radius:9px;border:1px solid transparent;
+}
+nav button:hover{background:rgba(255,255,255,.08)}
+nav button.on{background:var(--teal);color:#fff;font-weight:700}
+.btn-refresh{
+  color:#cfe0ec;border:1px solid rgba(91,191,181,.5);border-radius:9px;
+  padding:8px 13px;font-size:13px;display:flex;align-items:center;gap:6px;
+}
+.btn-refresh:hover{background:rgba(255,255,255,.08)}
+.btn-refresh svg{width:15px;height:15px}
+.btn-refresh.spin svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Pages ---------- */
+.page{display:none;padding:16px 22px 28px;max-width:1480px;margin:0 auto}
+.page.active{display:block}
+
+/* ---------- 報到頁三欄 ---------- */
+.checkin-grid{
+  display:grid;grid-template-columns:250px 1fr 1.15fr;gap:14px;
+  align-items:start;
+}
+.panel{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);min-width:0;width:100%;
+}
+.panel-h{
+  padding:11px 14px;border-bottom:1px solid var(--line);
+  font-size:13px;font-weight:900;letter-spacing:.04em;color:var(--navy);
+}
+
+/* 左欄：搜尋 + 名單 */
+.search-wrap{padding:12px 12px 8px}
+.search-box{position:relative}
+.search-box svg{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--muted)
+}
+.search-box input{
+  width:100%;padding:10px 12px 10px 34px;
+  border:1.5px solid var(--line);border-radius:10px;
+  font-size:15px;background:var(--mint-soft);color:var(--ink);
+}
+.search-box input:focus{outline:none;border-color:var(--teal);background:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px 11px;border-bottom:1px solid var(--line)}
+.chip{
+  font-size:12px;font-weight:500;color:var(--teal-deep);
+  border:1px solid var(--line);border-radius:99px;padding:4px 11px;background:#fff;
+}
+.chip:hover{border-color:var(--teal)}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:700}
+.list{max-height:calc(100vh - 320px);min-height:260px;overflow-y:auto;padding:6px}
+.list-item{
+  width:100%;display:flex;align-items:center;gap:10px;text-align:left;
+  padding:9px 9px;border-radius:10px;
+}
+.list-item:hover{background:var(--mint-soft)}
+.list-item.sel{background:var(--mint-soft);outline:1.5px solid var(--teal)}
+.ava{
+  width:32px;height:32px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:14px;font-weight:700;background:var(--teal);
+}
+.ava.nonmember{background:var(--amber)}
+.ava.done{background:var(--green)}
+.li-txt{min-width:0;flex:1}
+.li-name{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px}
+.li-org{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li-grp{font-size:11px;color:var(--teal-deep);background:var(--mint-soft);border-radius:6px;padding:1px 6px;flex:none}
+.li-check{width:16px;height:16px;color:var(--green);flex:none}
+.list-empty{padding:30px 14px;text-align:center;color:var(--muted);font-size:13.5px}
+.list-count{padding:7px 14px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
+
+/* 中欄：詳細資料 */
+.detail-empty{padding:70px 24px;text-align:center;color:var(--muted)}
+.detail-empty svg{width:42px;height:42px;color:var(--line);margin-bottom:10px}
+.detail{padding:18px}
+.d-top{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.d-ava{
+  width:56px;height:56px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:24px;font-weight:900;background:var(--teal);
+}
+.d-ava.nonmember{background:var(--amber)}
+.d-ava.done{background:var(--green)}
+.d-name{font-size:22px;font-weight:900;letter-spacing:.02em;color:var(--navy)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.pill{font-size:11.5px;font-weight:700;border-radius:99px;padding:3px 10px}
+.pill.member{background:var(--mint-soft);color:var(--teal-deep)}
+.pill.nonmember{background:var(--amber-soft);color:var(--amber)}
+.pill.cat{background:#eef2f1;color:var(--muted)}
+.pill.done{background:var(--green-soft);color:var(--green)}
+.d-fields{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:15px}
+.fld{background:#fff;padding:10px 13px}
+.fld.full{grid-column:1/-1}
+.fld .k{font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.fld .v{font-size:14.5px;margin-top:2px;word-break:break-all}
+.fld .v.empty{color:#b6c6c1}
+
+/* 右欄：動作 */
+.actions{padding:14px;display:flex;flex-direction:column;gap:12px}
+.act-card{border:1.5px solid var(--line);border-radius:12px;padding:15px 16px}
+.act-main{
+  border:none;background:var(--teal);color:#fff;border-radius:12px;
+  padding:20px 18px;text-align:left;width:100%;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .08s ease,filter .12s ease;
+}
+.act-main:hover{background:var(--teal-dark)}
+.act-main:active{transform:scale(.985)}
+.act-main .big{font-size:21px;font-weight:900;letter-spacing:.06em}
+.act-main .sub{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:2px}
+.act-main svg{width:30px;height:30px;color:rgba(255,255,255,.92);flex:none}
+.act-done{background:var(--green-soft);border:1.5px solid #bfe5cb;border-radius:12px;padding:16px}
+.act-done .t{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:900;color:var(--green)}
+.act-done .t svg{width:21px;height:21px}
+.act-done .time{font-size:12.5px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.btn-undo{
+  margin-top:11px;font-size:13px;color:var(--red);
+  border:1px solid #ecc8c8;border-radius:8px;padding:6px 13px;background:#fff;
+}
+.btn-undo:hover{background:#fdf3f3}
+.badge-grp-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stamp{
+  border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:3px;background:#fff;
+}
+.stamp .k{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:700}
+.stamp .v{
+  font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;font-weight:900;
+  font-size:30px;color:var(--navy);line-height:1.15;font-variant-numeric:tabular-nums;
+}
+.stamp .v.none{font-family:'Noto Sans TC',sans-serif;font-size:14px;color:#b6c6c1;font-weight:500;padding:8px 0}
+.stamp.grp{background:var(--mint-soft);border-color:#bfe9df}
+.stamp .hint{font-size:11.5px;color:var(--muted)}
+.act-note{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- 統計頁 ---------- */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;align-items:start}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.counter{background:#fff;padding:16px;text-align:center}
+.counter b{font-size:30px;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums}
+.counter span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.bar-row{padding:9px 16px;display:flex;align-items:center;gap:11px}
+.bar-row .lbl{width:84px;flex:none;font-size:13.5px;font-weight:700}
+.bar-track{flex:1;height:10px;background:var(--mint-soft);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s ease}
+.bar-row .num{width:74px;flex:none;text-align:right;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stats-foot{padding:10px 16px 13px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
+
+/* ---------- 設定頁 ---------- */
+.setup{max-width:680px;margin:0 auto}
+.setup .panel{padding:22px}
+.setup label{font-size:13px;font-weight:700;color:var(--teal-deep)}
+.setup input{
+  width:100%;margin-top:7px;padding:11px 13px;font-size:14px;
+  border:1.5px solid var(--line);border-radius:10px;
+}
+.setup input:focus{outline:none;border-color:var(--teal)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:6px}
+.btn-save{
+  margin-top:15px;background:var(--teal);color:#fff;font-size:14.5px;font-weight:700;
+  border-radius:10px;padding:11px 26px;
+}
+.btn-save:hover{background:var(--teal-deep)}
+.setup ol{margin:13px 0 0 20px;font-size:13.5px;color:var(--muted);line-height:1.9}
+.setup code{background:var(--mint-soft);border-radius:5px;padding:1px 6px;font-size:12.5px;color:var(--teal-deep)}
+
+/* ---------- Toast ---------- */
+#toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);
+  background:var(--ink);color:#fff;font-size:14px;border-radius:10px;
+  padding:11px 20px;opacity:0;pointer-events:none;transition:.25s;z-index:99;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:1020px){
+  .checkin-grid{grid-template-columns:1fr}
+  .list{max-height:330px}
+  .brand h1{white-space:normal;font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-logo">
+    <img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="台灣醫事聯合臨床技能發展學會" onerror="this.parentNode.style.display='none'">
+  </div>
+  <div class="brand">
+    <div class="kicker">CHECK-IN · 1150718</div>
+    <h1>AI × 醫學教學應用工作坊</h1>
+    <div class="meta">115年7月18日（六）13:15–17:30｜奇美醫院 第五醫療大樓 5樓 552會議室</div>
+  </div>
+  <div class="hd-spacer"></div>
+  <div class="hd-stat"><b id="hdChecked">0</b><span>已報到 / <span id="hdTotal">0</span> 人</span></div>
+  <button class="btn-refresh" id="btnRefresh" title="重新載入名單">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 4v5h-5"/></svg>
+    更新
+  </button>
+  <nav>
+    <button data-page="checkin" class="on">報到</button>
+    <button data-page="stats">統計</button>
+    <button data-page="setup">設定</button>
+  </nav>
+</header>
+
+<!-- ============ 報到頁 ============ -->
+<div class="page active" id="page-checkin">
+  <div class="checkin-grid">
+
+    <!-- 左：搜尋與名單 -->
+    <div class="panel">
+      <div class="search-wrap">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="text" placeholder="搜尋姓名或單位…" autocomplete="off">
+        </div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="list" id="list"><div class="list-empty">載入中…</div></div>
+      <div class="list-count" id="listCount"></div>
+    </div>
+
+    <!-- 中：詳細資料 -->
+    <div class="panel" id="detailPanel">
+      <div class="panel-h">學員資料</div>
+      <div id="detailBody">
+        <div class="detail-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+          <div>請從左側名單選擇學員</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右：報到動作 -->
+    <div class="panel">
+      <div class="panel-h">報到動作</div>
+      <div class="actions" id="actionsBody">
+        <div class="act-note">選擇學員後，此處會顯示報到按鈕、識別證編號與組別引導。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ 統計頁 ============ -->
+<div class="page" id="page-stats">
+  <div class="counters">
+    <div class="counter"><b id="stTotal">0</b><span>報名總人數</span></div>
+    <div class="counter"><b id="stChecked">0</b><span>已報到</span></div>
+    <div class="counter"><b id="stRate">0%</b><span>報到率</span></div>
+  </div>
+  <div class="stats-grid">
+    <div class="panel">
+      <div class="panel-h">各組報到狀況</div>
+      <div id="stGroups" style="padding:8px 0"></div>
+      <div class="stats-foot">組別資料來源：報到試算表「分組名單」工作表</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">職類分布（已報到 / 報名）</div>
+      <div id="stProf" style="padding:8px 0"></div>
+      <div class="stats-foot" id="stMemberLine"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 設定頁 ============ -->
+<div class="page" id="page-setup">
+  <div class="setup">
+    <div class="panel">
+      <label for="apiUrl">報到系統 Web App URL</label>
+      <input id="apiUrl" type="text" placeholder="https://script.google.com/macros/s/……/exec">
+      <div class="hint">報到系統<b>獨立</b> Apps Script 的 Web App URL（非報名系統的 URL）。儲存於此瀏覽器，僅需設定一次。</div>
+      <button class="btn-save" id="btnSave">儲存並載入名單</button>
+      <ol>
+        <li>建立新 Google Sheet，貼上 <code>20260718-Checkin-AppScript.gs</code></li>
+        <li>執行 <code>initAllSheets()</code> 建立「報到紀錄／識別證編號／分組名單」</li>
+        <li>執行 <code>testConnection()</code> 確認可讀取報名資料</li>
+        <li>在「識別證編號」「分組名單」填入資料（組別填：第1組～第6組）</li>
+        <li>部署為網頁應用程式（執行身分：我／存取：所有人）→ 複製 URL 貼到上方</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+/* ================= 狀態 ================= */
+const LS_KEY = 'ws0718_checkin_api';
+/* 報到系統已部署的 Web App URL（預設值，毋須手動設定即可使用） */
+const DEFAULT_API = 'https://script.google.com/macros/s/AKfycbyYxKfFohSlMME5HbEOBhKWAvV0Ooirul1gWPyOI8QpyH3OKGD-nq9BFDgKEgPgKaiYmw/exec';
+const state = {
+  api: localStorage.getItem(LS_KEY) || DEFAULT_API,
+  regs: [],
+  q: '',
+  group: null,     // null=全部
+  selKey: null,
+  loading: false
+};
+const collator = new Intl.Collator('zh-Hant-TW-u-co-stroke');
+const $ = id => document.getElementById(id);
+
+/* ================= 工具 ================= */
+function keyOf(r){ return r.idNumber || r.name; }
+function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function nowStr(){
+  const d = new Date(), p = n => String(n).padStart(2,'0');
+  return d.getFullYear()+'/'+p(d.getMonth()+1)+'/'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
+}
+
+/* ================= 資料載入 ================= */
+async function loadData(){
+  if(!state.api){ switchPage('setup'); return; }
+  state.loading = true;
+  $('btnRefresh').classList.add('spin');
+  $('list').innerHTML = '<div class="list-empty">載入中…</div>';
+  try{
+    const res = await fetch(state.api + '?action=checkin_list', { method:'GET' });
+    const data = await res.json();
+    if(data.status !== 'success') throw new Error(data.message || '回傳資料異常');
+    state.regs = data.registrations || [];
+    renderAll();
+    toast('名單已更新（' + state.regs.length + ' 人）');
+  }catch(err){
+    $('list').innerHTML = '<div class="list-empty">⚠ 無法載入名單<br>' + esc(err.message) + '<br><br>請至「設定」確認 Web App URL。</div>';
+  }finally{
+    state.loading = false;
+    $('btnRefresh').classList.remove('spin');
+  }
+}
+
+/* ================= 同步（fire-and-forget） ================= */
+function postAction(payload){
+  if(!state.api) return;
+  fetch(state.api, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+/* ================= 渲染 ================= */
+function renderAll(){
+  renderHeaderStats();
+  renderChips();
+  renderList();
+  renderDetail();
+  renderStats();
+}
+
+function renderHeaderStats(){
+  $('hdTotal').textContent = state.regs.length;
+  $('hdChecked').textContent = state.regs.filter(r=>r.checkedIn).length;
+}
+
+function groupList(){
+  const set = new Set(state.regs.map(r=>r.group).filter(Boolean));
+  return [...set].sort(collator.compare);
+}
+
+function renderChips(){
+  const groups = groupList();
+  const hasUngrouped = state.regs.some(r=>!r.group);
+  let html = chipHtml(null,'全部');
+  groups.forEach(g => html += chipHtml(g,g));
+  if(hasUngrouped && groups.length) html += chipHtml('__none__','未分組');
+  $('chips').innerHTML = html;
+  $('chips').querySelectorAll('.chip').forEach(btn=>{
+    btn.onclick = () => {
+      const v = btn.dataset.g;
+      state.group = (v === '') ? null : v;
+      renderChips(); renderList();
+    };
+  });
+}
+function chipHtml(val,label){
+  const v = val === null ? '' : val;
+  const on = (state.group === null && val === null) || state.group === val;
+  return '<button class="chip'+(on?' on':'')+'" data-g="'+esc(v)+'">'+esc(label)+'</button>';
+}
+
+function filteredRegs(){
+  const q = state.q.trim();
+  let arr = state.regs;
+  if(state.group === '__none__') arr = arr.filter(r=>!r.group);
+  else if(state.group) arr = arr.filter(r=>r.group === state.group);
+  let nameHits = [], orgHits = [];
+  if(q){
+    arr.forEach(r=>{
+      if(r.name.includes(q)) nameHits.push(r);
+      else if((r.org+r.dept).includes(q)) orgHits.push(r);
+    });
+  }else nameHits = arr.slice();
+  nameHits.sort((a,b)=>collator.compare(a.name,b.name));
+  orgHits.sort((a,b)=>collator.compare(a.name,b.name));
+  return nameHits.concat(orgHits);
+}
+
+function renderList(){
+  const arr = filteredRegs();
+  if(!arr.length){
+    $('list').innerHTML = '<div class="list-empty">'+(state.regs.length?'查無符合的學員':'尚無報名資料')+'</div>';
+    $('listCount').textContent = '';
+    return;
+  }
+  $('list').innerHTML = arr.map(r=>{
+    const k = keyOf(r);
+    const avaCls = r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember');
+    return '<button class="list-item'+(state.selKey===k?' sel':'')+'" data-k="'+esc(k)+'">'
+      + '<div class="ava '+avaCls+'">'+esc(r.name.charAt(0))+'</div>'
+      + '<div class="li-txt"><div class="li-name">'+esc(r.name)
+      + (r.group?'<span class="li-grp">'+esc(r.group)+'</span>':'')+'</div>'
+      + '<div class="li-org">'+esc(r.org||'—')+'</div></div>'
+      + (r.checkedIn?'<svg class="li-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':'')
+      + '</button>';
+  }).join('');
+  $('listCount').textContent = '顯示 ' + arr.length + ' 人';
+  $('list').querySelectorAll('.list-item').forEach(btn=>{
+    btn.onclick = () => { state.selKey = btn.dataset.k; renderList(); renderDetail(); };
+  });
+}
+
+function selected(){
+  return state.regs.find(r=>keyOf(r)===state.selKey) || null;
+}
+
+function renderDetail(){
+  const r = selected();
+  if(!r){
+    $('detailBody').innerHTML = '<div class="detail-empty">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6.5 8-6.5s8 2.5 8 6.5"/></svg>'
+      + '<div>請從左側名單選擇學員</div></div>';
+    renderActions(null);
+    return;
+  }
+  const avaCls = r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember');
+  const prof = r.profession + (r.professionOther?('（'+r.professionOther+'）'):'');
+  $('detailBody').innerHTML =
+    '<div class="detail">'
+    + '<div class="d-top"><div class="d-ava '+avaCls+'">'+esc(r.name.charAt(0))+'</div>'
+    + '<div><div class="d-name">'+esc(r.name)+'</div><div class="pills">'
+    + (r.isMember?'<span class="pill member">本會會員</span>':'<span class="pill nonmember">非會員</span>')
+    + (r.category?'<span class="pill cat">'+esc(r.category)+'</span>':'')
+    + (r.checkedIn?'<span class="pill done">已報到</span>':'')
+    + '</div></div></div>'
+    + '<div class="d-fields">'
+    + fld('服務單位', r.org)
+    + fld('部門', r.dept)
+    + fld('職稱', r.title)
+    + fld('職類', prof)
+    + fld('聯絡電話', r.phone)
+    + fld('Email', r.email)
+    + '</div></div>';
+  renderActions(r);
+}
+function fld(k,v){
+  return '<div class="fld"><div class="k">'+k+'</div><div class="v'+(v?'':' empty')+'">'+(v?esc(v):'未填')+'</div></div>';
+}
+
+function renderActions(r){
+  const box = $('actionsBody');
+  if(!r){
+    box.innerHTML = '<div class="act-note">選擇學員後，此處會顯示報到按鈕、識別證編號與組別引導。</div>';
+    return;
+  }
+  let html = '';
+  if(r.checkedIn){
+    html += '<div class="act-done"><div class="t">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.5V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg>'
+      + esc(r.name)+' 已完成報到</div>'
+      + '<div class="time">報到時間：'+esc(r.checkinTime||'—')+'</div>'
+      + '<button class="btn-undo" id="btnUndo">取消報到</button></div>';
+  }else{
+    html += '<button class="act-main" id="btnCheckin">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>'
+      + '<div><div class="big">'+esc(r.name)+'　完成報到</div>'
+      + '<div class="sub">點按後即記錄報到時間</div></div></button>';
+  }
+  html += '<div class="badge-grp-row">'
+    + '<div class="stamp"><div class="k">識別證編號</div>'
+    + (r.badge?'<div class="v">'+esc(r.badge)+'</div><div class="hint">請交付對應識別證</div>'
+              :'<div class="v none">未設定</div>')
+    + '</div>'
+    + '<div class="stamp grp"><div class="k">組別</div>'
+    + (r.group?'<div class="v">'+esc(r.group)+'</div><div class="hint">請引導至 '+esc(r.group)+' 座位區</div>'
+              :'<div class="v none">未分組</div>')
+    + '</div></div>';
+  box.innerHTML = html;
+
+  const btnC = $('btnCheckin');
+  if(btnC) btnC.onclick = () => doCheckin(r);
+  const btnU = $('btnUndo');
+  if(btnU) btnU.onclick = () => doUndo(r);
+}
+
+/* ================= 報到動作 ================= */
+function doCheckin(r){
+  r.checkedIn = true;
+  r.checkinTime = nowStr();
+  postAction({ action:'checkin', name:r.name, idNumber:r.idNumber });
+  toast('✓ ' + r.name + ' 報到完成' + (r.group?('｜'+r.group):''));
+  renderAll();
+}
+function doUndo(r){
+  if(!confirm('確定要取消「'+r.name+'」的報到紀錄嗎？')) return;
+  r.checkedIn = false;
+  r.checkinTime = '';
+  postAction({ action:'undo_checkin', name:r.name, idNumber:r.idNumber });
+  toast(r.name + ' 已取消報到');
+  renderAll();
+}
+
+/* ================= 統計頁 ================= */
+function renderStats(){
+  const total = state.regs.length;
+  const checked = state.regs.filter(r=>r.checkedIn).length;
+  $('stTotal').textContent = total;
+  $('stChecked').textContent = checked;
+  $('stRate').textContent = total ? Math.round(checked/total*100)+'%' : '0%';
+
+  // 各組
+  const groups = groupList();
+  const rows = groups.map(g=>{
+    const arr = state.regs.filter(r=>r.group===g);
+    return { lbl:g, done:arr.filter(r=>r.checkedIn).length, all:arr.length };
+  });
+  const ung = state.regs.filter(r=>!r.group);
+  if(ung.length) rows.push({ lbl:'未分組', done:ung.filter(r=>r.checkedIn).length, all:ung.length });
+  $('stGroups').innerHTML = rows.length ? rows.map(barRow).join('')
+    : '<div class="list-empty">尚未設定分組</div>';
+
+  // 職類
+  const profMap = {};
+  state.regs.forEach(r=>{
+    const p = r.profession || '未填';
+    if(!profMap[p]) profMap[p] = { done:0, all:0 };
+    profMap[p].all++;
+    if(r.checkedIn) profMap[p].done++;
+  });
+  const profRows = Object.keys(profMap).sort((a,b)=>profMap[b].all-profMap[a].all)
+    .map(p=>({ lbl:p, done:profMap[p].done, all:profMap[p].all }));
+  $('stProf').innerHTML = profRows.length ? profRows.map(barRow).join('')
+    : '<div class="list-empty">尚無資料</div>';
+
+  const mem = state.regs.filter(r=>r.isMember).length;
+  $('stMemberLine').textContent = '本會會員 ' + mem + ' 人｜非會員 ' + (total-mem) + ' 人';
+}
+function barRow(r){
+  const pct = r.all ? Math.round(r.done/r.all*100) : 0;
+  return '<div class="bar-row"><div class="lbl">'+esc(r.lbl)+'</div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+    + '<div class="num">'+r.done+' / '+r.all+'</div></div>';
+}
+
+/* ================= 頁面切換 ================= */
+function switchPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $('page-'+name).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', b.dataset.page===name));
+  if(name==='setup') $('apiUrl').value = state.api;
+}
+document.querySelectorAll('nav button').forEach(b=>{
+  b.onclick = () => switchPage(b.dataset.page);
+});
+
+/* ================= 事件 ================= */
+$('q').addEventListener('input', e=>{ state.q = e.target.value; renderList(); });
+$('btnRefresh').onclick = () => { if(!state.loading) loadData(); };
+$('btnSave').onclick = () => {
+  const url = $('apiUrl').value.trim();
+  if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(url)){
+    toast('⚠ 請貼上正確的 Web App URL（結尾為 /exec）');
+    return;
+  }
+  state.api = url;
+  localStorage.setItem(LS_KEY, url);
+  switchPage('checkin');
+  loadData();
+};
+
+/* ================= 啟動 ================= */
+if(state.api) loadData();
+else switchPage('setup');
+</script>
+</body>
+</html>
