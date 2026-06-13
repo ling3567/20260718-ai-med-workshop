@@ -604,7 +604,7 @@ function renderDetail(){
     '<div class="detail">'
     + '<div class="d-top"><div class="d-ava '+avaCls+'">'+esc(r.name.charAt(0))+'</div>'
     + '<div><div class="d-name">'+esc(r.name)+'</div><div class="pills">'
-    + (r.isMember?'<span class="pill member">本會會員</span>':'<span class="pill nonmember">非會員</span>')
+    + (r.isMember?'<span class="pill member">'+esc(r.memberType||'本會會員')+'</span>':'<span class="pill nonmember">'+esc(r.memberType||'非會員')+'</span>')
     + (r.category?'<span class="pill cat">'+esc(r.category)+'</span>':'')
     + (r.checkedIn?'<span class="pill done">已報到</span>':'')
     + '</div></div></div>'
@@ -612,9 +612,9 @@ function renderDetail(){
     + fld('服務單位', r.org, ICON.org, true)
     + fld('部門', r.dept, ICON.dept)
     + fld('職稱', r.title, ICON.title)
-    + fld('職類', prof, ICON.prof, true)
+    + fld('職類', prof, ICON.prof)
     + fld('聯絡電話', r.phone, ICON.phone)
-    + fld('Email', r.email, ICON.mail)
+    + fld('Email', r.email, ICON.mail, true)
     + '</div></div>';
   renderActions(r);
 }
