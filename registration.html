@@ -233,6 +233,36 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 .bar-track{flex:1;height:10px;background:var(--mint-soft);border-radius:99px;overflow:hidden}
 .bar-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s ease}
 .bar-row .num{width:74px;flex:none;text-align:right;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+/* 堆疊式長條（服務單位等長名稱用）：名稱在上完整顯示，長條在下 */
+.bar-stack{padding:10px 16px}
+.bar-stack .lbl{font-size:13.5px;font-weight:700;color:var(--text);line-height:1.4;word-break:break-word;margin-bottom:6px}
+.bar-stack .bar-line{display:flex;align-items:center;gap:11px}
+.bar-stack .bar-track{flex:1}
+.bar-stack .num{flex:none;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 各組可展開名單 */
+.grp-acc{border-bottom:1px solid var(--line)}
+.grp-acc:last-child{border-bottom:none}
+.grp-head{
+  width:100%;background:none;text-align:left;
+  padding:10px 16px;display:flex;align-items:center;gap:11px;
+}
+.grp-head:hover{background:var(--lt-teal)}
+.grp-head .gname{width:64px;flex:none;font-size:13.5px;font-weight:700}
+.grp-head .bar-track{flex:1;height:10px;background:var(--mint-soft);border-radius:99px;overflow:hidden}
+.grp-head .bar-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s ease}
+.grp-head .gnum{width:64px;flex:none;text-align:right;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.grp-head .chev{width:15px;height:15px;flex:none;color:var(--text-muted);transition:transform .2s ease}
+.grp-acc.open .chev{transform:rotate(90deg)}
+.grp-names{display:none;padding:2px 16px 12px 16px;flex-wrap:wrap;gap:6px}
+.grp-acc.open .grp-names{display:flex}
+.nametag{
+  font-size:12.5px;font-weight:600;border-radius:8px;padding:4px 10px;
+  display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);
+}
+.nametag svg{width:12px;height:12px;flex:none}
+.nametag.done{background:var(--green-soft);color:var(--green);border-color:#bfe5cb}
+.nametag.wait{background:#fff;color:var(--text-mid)}
+.nametag.wait svg{color:#c2cdd6}
 .stats-foot{padding:10px 16px 13px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
 
 /* ---------- 設定頁 ---------- */
@@ -263,11 +293,10 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ---------- 響應式 ---------- */
-/* 平板：三欄 → 詳細與動作並排在搜尋名單下方 */
-@media (max-width:1100px){
-  .checkin-grid{grid-template-columns:1fr 1fr}
-  .checkin-grid > .panel:first-child{grid-column:1/-1}
-  .list{max-height:none;min-height:0;max-height:340px}
+/* 報到頁維持三分法（三欄），僅在較窄時微縮欄寬 */
+@media (max-width:1000px){
+  .checkin-grid{grid-template-columns:200px 1fr 1fr;gap:10px}
+  .page{padding:14px 14px 26px}
 }
 /* 手機：全部單欄堆疊 */
 @media (max-width:720px){
@@ -283,7 +312,6 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   nav button{flex:1;text-align:center;padding:9px 6px}
   .page{padding:12px 14px 24px}
   .checkin-grid{grid-template-columns:1fr;gap:12px}
-  .checkin-grid > .panel:first-child{grid-column:auto}
   .list{max-height:46vh}
   .d-fields{grid-template-columns:1fr}
   .fld.full{grid-column:auto}
@@ -292,7 +320,6 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   .d-ava{width:48px;height:48px;font-size:20px}
   .counters{grid-template-columns:1fr;gap:1px}
   .stats-grid{grid-template-columns:1fr}
-  .bar-row .lbl{width:92px;font-size:12.5px}
   .stamp .v{font-size:26px}
   #toast{left:14px;right:14px;bottom:16px;transform:translateY(16px);text-align:center}
   #toast.show{transform:translateY(0)}
@@ -665,26 +692,28 @@ function renderStats(){
   $('stChecked').textContent = checked;
   $('stRate').textContent = total ? Math.round(checked/total*100)+'%' : '0%';
 
-  // 各組
+  // 各組（可展開看名單）
   const groups = groupList();
-  const rows = groups.map(g=>{
-    const arr = state.regs.filter(r=>r.group===g);
-    return { lbl:g, done:arr.filter(r=>r.checkedIn).length, all:arr.length };
-  });
+  const groupData = groups.map(g=>({ lbl:g, members:state.regs.filter(r=>r.group===g) }));
   const ung = state.regs.filter(r=>!r.group);
-  if(ung.length) rows.push({ lbl:'未分組', done:ung.filter(r=>r.checkedIn).length, all:ung.length });
-  $('stGroups').innerHTML = rows.length ? rows.map(barRow).join('')
+  if(ung.length) groupData.push({ lbl:'未分組', members:ung });
+  $('stGroups').innerHTML = groupData.length ? groupData.map(groupAcc).join('')
     : '<div class="list-empty">尚未設定分組</div>';
+  // 綁定展開
+  $('stGroups').querySelectorAll('.grp-head').forEach(h=>{
+    h.onclick = () => h.parentNode.classList.toggle('open');
+  });
 
-  // 職類
+  // 職類（依指定順序）
   const profMap = {};
   state.regs.forEach(r=>{
-    const p = r.profession || '未填';
+    const p = (r.profession || '未填').trim() || '未填';
     if(!profMap[p]) profMap[p] = { done:0, all:0 };
     profMap[p].all++;
     if(r.checkedIn) profMap[p].done++;
   });
-  const profRows = Object.keys(profMap).sort((a,b)=>profMap[b].all-profMap[a].all)
+  const profRows = Object.keys(profMap)
+    .sort((a,b)=>profRank(a)-profRank(b) || profMap[b].all-profMap[a].all || collator.compare(a,b))
     .map(p=>({ lbl:p, done:profMap[p].done, all:profMap[p].all }));
   $('stProf').innerHTML = profRows.length ? profRows.map(barRow).join('')
     : '<div class="list-empty">尚無資料</div>';
@@ -692,7 +721,7 @@ function renderStats(){
   const mem = state.regs.filter(r=>r.isMember).length;
   $('stMemberLine').textContent = '本會會員 ' + mem + ' 人｜非會員 ' + (total-mem) + ' 人';
 
-  // 服務單位
+  // 服務單位（堆疊式，完整顯示名稱）
   const orgMap = {};
   state.regs.forEach(r=>{
     const o = (r.org || '未填').trim() || '未填';
@@ -702,15 +731,51 @@ function renderStats(){
   });
   const orgKeys = Object.keys(orgMap).sort((a,b)=>orgMap[b].all-orgMap[a].all || collator.compare(a,b));
   const orgRows = orgKeys.map(o=>({ lbl:o, done:orgMap[o].done, all:orgMap[o].all }));
-  $('stOrg').innerHTML = orgRows.length ? orgRows.map(barRow).join('')
+  $('stOrg').innerHTML = orgRows.length ? orgRows.map(barRowStack).join('')
     : '<div class="list-empty">尚無資料</div>';
   $('stOrgFoot').textContent = '共 ' + orgKeys.length + ' 個服務單位';
 }
+
+/* 職類排序權重 */
+const PROF_ORDER = ['西醫','藥事','醫事放射','醫事檢驗','護理','營養','呼吸治療','聽力','物理治療','職能治療','臨床心理','語言治療','專科護理師','其他'];
+function profRank(p){
+  const i = PROF_ORDER.indexOf(p);
+  return i === -1 ? PROF_ORDER.length + 1 : i; // 不在清單者排最後（但「其他」固定在清單末位之前）
+}
+
+/* 一般長條（窄標籤：組別、職類）*/
 function barRow(r){
   const pct = r.all ? Math.round(r.done/r.all*100) : 0;
   return '<div class="bar-row"><div class="lbl" title="'+esc(r.lbl)+'">'+esc(r.lbl)+'</div>'
     + '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
     + '<div class="num">'+r.done+' / '+r.all+'</div></div>';
+}
+/* 堆疊長條（長名稱：服務單位）*/
+function barRowStack(r){
+  const pct = r.all ? Math.round(r.done/r.all*100) : 0;
+  return '<div class="bar-stack"><div class="lbl">'+esc(r.lbl)+'</div>'
+    + '<div class="bar-line"><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+    + '<div class="num">'+r.done+' / '+r.all+'</div></div></div>';
+}
+/* 各組可展開列（顯示誰報到/未報到）*/
+const SVG_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const SVG_DOT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"/></svg>';
+function groupAcc(g){
+  const done = g.members.filter(m=>m.checkedIn).length;
+  const all = g.members.length;
+  const pct = all ? Math.round(done/all*100) : 0;
+  // 已報到在前，依筆畫排序
+  const sorted = g.members.slice().sort((a,b)=>(b.checkedIn-a.checkedIn) || collator.compare(a.name,b.name));
+  const tags = sorted.map(m=>{
+    const cls = m.checkedIn ? 'done' : 'wait';
+    return '<span class="nametag '+cls+'">'+(m.checkedIn?SVG_CHECK:SVG_DOT)+esc(m.name)+'</span>';
+  }).join('');
+  return '<div class="grp-acc"><button class="grp-head">'
+    + '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
+    + '<div class="gname">'+esc(g.lbl)+'</div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div>'
+    + '<div class="gnum">'+done+' / '+all+'</div></button>'
+    + '<div class="grp-names">'+(tags||'<span style="color:var(--text-muted);font-size:12.5px">（無人員）</span>')+'</div></div>';
 }
 
 /* ================= 頁面切換 ================= */
