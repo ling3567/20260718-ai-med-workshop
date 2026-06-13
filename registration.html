@@ -366,7 +366,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
       <div class="search-wrap">
         <div class="search-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="text" placeholder="搜尋姓名或單位…" autocomplete="off">
+          <input id="q" type="text" placeholder="搜尋姓名、單位或職類…" autocomplete="off">
         </div>
       </div>
       <div class="chips" id="chips"></div>
@@ -549,16 +549,18 @@ function filteredRegs(){
   let arr = state.regs;
   if(state.group === '__none__') arr = arr.filter(r=>!r.group);
   else if(state.group) arr = arr.filter(r=>r.group === state.group);
-  let nameHits = [], orgHits = [];
+  let nameHits = [], orgHits = [], profHits = [];
   if(q){
     arr.forEach(r=>{
       if(r.name.includes(q)) nameHits.push(r);
       else if((r.org+r.dept).includes(q)) orgHits.push(r);
+      else if((r.profession+r.professionOther).includes(q)) profHits.push(r);
     });
   }else nameHits = arr.slice();
   nameHits.sort((a,b)=>collator.compare(a.name,b.name));
   orgHits.sort((a,b)=>collator.compare(a.name,b.name));
-  return nameHits.concat(orgHits);
+  profHits.sort((a,b)=>collator.compare(a.name,b.name));
+  return nameHits.concat(orgHits, profHits);
 }
 
 function renderList(){
@@ -718,8 +720,17 @@ function renderStats(){
   $('stProf').innerHTML = profRows.length ? profRows.map(barRow).join('')
     : '<div class="list-empty">尚無資料</div>';
 
-  const mem = state.regs.filter(r=>r.isMember).length;
-  $('stMemberLine').textContent = '本會會員 ' + mem + ' 人｜非會員 ' + (total-mem) + ' 人';
+  let cPersonal = 0, cGroup = 0, cNon = 0, cOther = 0;
+  state.regs.forEach(r=>{
+    const t = String(r.memberType || '').trim();
+    if(!r.isMember){ cNon++; }
+    else if(t.indexOf('個人') !== -1){ cPersonal++; }
+    else if(t.indexOf('團體') !== -1){ cGroup++; }
+    else { cOther++; } // 會員但未標明個人/團體
+  });
+  $('stMemberLine').textContent =
+    '本會個人會員 ' + cPersonal + ' 位｜團體會員 ' + cGroup + ' 位｜非會員 ' + cNon + ' 位'
+    + (cOther ? '｜其他會員 ' + cOther + ' 位' : '');
 
   // 服務單位（堆疊式，完整顯示名稱）
   const orgMap = {};
