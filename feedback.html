@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>課後滿意度調查｜AI × 醫學教學應用工作坊</title>
+<meta name="description" content="AI × 醫學教學應用工作坊 課後滿意度調查表 — 115年7月18日">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#5BBFB5;--teal-dark:#3A9D8F;--teal-deep:#2e8078;
+    --navy:#1B3A5C;--light-bg:#E8F4F8;--lt-teal:#EAF8F6;--white:#fff;
+    --text:#2c3e50;--text-mid:#4a6070;--text-muted:#7a90a4;--border:#cde4eb;
+    --card-sh:0 2px 14px rgba(91,191,181,.11);
+    --font:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:21px}
+  body{font-family:var(--font);color:var(--text);background:#f7fbfc;line-height:1.7}
+  @media(max-width:760px){html{font-size:17px}}
+
+  /* ══ NAV ══ */
+  #top-nav{position:sticky;top:0;z-index:100;background:var(--navy);box-shadow:0 2px 10px rgba(27,58,92,.22)}
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;height:56px}
+  .nav-logo{color:var(--teal);font-weight:700;font-size:.86rem;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:.6rem}
+  .nav-logo img{height:36px;width:36px;display:block;background:#fff;border-radius:50%;padding:3px;box-shadow:0 0 0 2px rgba(91,191,181,.45);object-fit:contain;flex-shrink:0}
+  .nav-tag{color:#9fc0d8;font-size:.72rem;font-weight:500}
+  @media(max-width:560px){.nav-tag{display:none}}
+
+  /* ══ HERO ══ */
+  #hero{background:#fff;border-bottom:1px solid #e4eff4;position:relative;overflow:hidden}
+  #hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(160deg,var(--lt-teal) 0%,#d4eef4 100%);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);pointer-events:none;z-index:0}
+  @media(max-width:640px){#hero::after{display:none}}
+  .hero-inner{max-width:1000px;margin:0 auto;padding:3rem 1.4rem 2.4rem;position:relative;z-index:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--lt-teal);border:1px solid rgba(91,191,181,.35);color:var(--teal-dark);padding:.24rem .88rem;border-radius:20px;font-size:.72rem;letter-spacing:.06em;font-weight:600;margin-bottom:1rem}
+  .hero-title{font-size:clamp(1.6rem,4.4vw,2.6rem);font-weight:900;color:var(--navy);letter-spacing:.02em;line-height:1.18;margin-bottom:.5rem;max-width:640px}
+  .hero-title .x-accent{color:var(--teal)}
+  .hero-subtitle{font-size:clamp(.85rem,2vw,1rem);color:var(--teal-dark);font-weight:600;margin-bottom:1.1rem}
+  .hero-intro{max-width:660px;background:linear-gradient(145deg,#f0fbf9 0%,#e6f5f8 100%);border:1px solid rgba(91,191,181,.2);border-radius:14px;padding:1.1rem 1.3rem;font-size:.85rem;color:var(--text-mid);line-height:1.85}
+  .hero-intro .hl{font-weight:700;color:var(--teal-deep)}
+
+  /* ══ SECTION / FORM ══ */
+  .wrap{max-width:1000px;margin:0 auto;padding:2.4rem 1.4rem 3rem}
+  .form-card{background:#fff;border-radius:18px;padding:2.2rem 2rem;box-shadow:0 4px 28px rgba(27,58,92,.1)}
+  @media(max-width:560px){.form-card{padding:1.5rem 1.15rem}}
+
+  .part-head{display:flex;align-items:center;gap:.7rem;margin:2.2rem 0 1.2rem}
+  .part-head:first-of-type{margin-top:0}
+  .part-num{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;font-size:.9rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .part-title{font-size:1.05rem;font-weight:900;color:var(--navy);letter-spacing:.02em}
+  .part-sub{font-size:.76rem;color:var(--text-muted);margin:-.7rem 0 1.1rem 2.4rem}
+
+  .q{margin-bottom:1.55rem}
+  .q-label{display:block;font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;line-height:1.6}
+  .q-label .qn{color:var(--teal-dark);margin-right:.15rem}
+  .q-label .req{color:#d94040;margin-left:3px;font-weight:700}
+  .q-note{font-weight:400;color:var(--text-muted);font-size:.78rem}
+
+  /* choice list (single/multi) */
+  .opts{display:flex;flex-direction:column;gap:.5rem}
+  .opts.cols{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .9rem}
+  @media(max-width:560px){.opts.cols{grid-template-columns:1fr}}
+  .opt{display:flex;align-items:center;gap:.55rem;padding:.55rem .85rem;background:#f8fcfd;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:.86rem;color:var(--text);transition:border-color .18s,background .18s}
+  .opt:hover{border-color:var(--teal);background:var(--lt-teal)}
+  .opt input{width:16px;height:16px;accent-color:var(--teal);flex-shrink:0}
+  .opt:has(input:checked){background:var(--lt-teal);border-color:var(--teal);font-weight:500}
+  .opt-other{align-items:center}
+  .opt-other input[type="text"]{flex:1;min-width:80px;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:.15rem .2rem;font-family:var(--font);font-size:.84rem;color:var(--text);outline:none}
+  .opt-other input[type="text"]:focus{border-bottom-color:var(--teal)}
+
+  /* Likert */
+  .likert-legend{display:flex;flex-wrap:wrap;gap:.4rem .9rem;background:var(--light-bg);border-radius:10px;padding:.65rem .9rem;font-size:.74rem;color:var(--text-mid);margin-bottom:1.3rem}
+  .likert-legend b{color:var(--navy)}
+  .likert-item{padding:1rem 0;border-bottom:1px solid #eef6f9}
+  .likert-item:last-child{border-bottom:none}
+  .likert-q{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.7rem;line-height:1.6}
+  .likert-q .qn{color:var(--teal-dark);font-weight:700;margin-right:.15rem}
+  .likert-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem;max-width:420px}
+  .lk{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;padding:.5rem .2rem;background:#f8fcfd;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;text-align:center}
+  .lk input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0;margin:0}
+  .lk .lk-num{font-size:1.05rem;font-weight:900;color:var(--text-muted);line-height:1}
+  .lk .lk-cap{font-size:.56rem;color:var(--text-muted);line-height:1.1}
+  .lk:hover{border-color:var(--teal)}
+  .lk:has(input:checked){background:linear-gradient(135deg,var(--teal),var(--teal-dark));border-color:var(--teal-dark);box-shadow:0 3px 10px rgba(91,191,181,.35)}
+  .lk:has(input:checked) .lk-num,.lk:has(input:checked) .lk-cap{color:#fff}
+
+  /* textarea */
+  textarea{width:100%;padding:.7rem .85rem;border:1.5px solid var(--border);border-radius:10px;font-size:.86rem;font-family:var(--font);color:var(--text);background:#fdffff;outline:none;resize:vertical;min-height:88px;transition:border-color .2s,box-shadow .2s}
+  textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(91,191,181,.16)}
+
+  /* notice + submit */
+  .form-notice{display:flex;align-items:flex-start;gap:.55rem;background:#f0f9f8;border:1px solid rgba(91,191,181,.4);border-radius:10px;padding:.82rem 1rem;font-size:.78rem;color:var(--teal-dark);line-height:1.65;margin-top:1.6rem}
+  .form-notice svg{flex-shrink:0;margin-top:.12rem;color:var(--teal-dark)}
+  .submit-row{text-align:center;margin-top:1.5rem}
+  .btn-submit{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;padding:.85rem 3rem;border:none;border-radius:28px;font-size:1rem;font-weight:700;font-family:var(--font);cursor:pointer;box-shadow:0 5px 18px rgba(91,191,181,.4);transition:transform .15s,box-shadow .2s;letter-spacing:.06em}
+  .btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 26px rgba(91,191,181,.46)}
+  .btn-submit:disabled{opacity:.7;cursor:default}
+  #form-error{display:none;background:#fff0f0;border:1px solid #f5c0c0;border-radius:10px;padding:.72rem .95rem;font-size:.82rem;color:#c0392b;margin-top:1rem;text-align:center}
+
+  #form-success{display:none;text-align:center;padding:2.6rem 1rem}
+  #form-success .sico{margin-bottom:.9rem}
+  #form-success h3{font-size:1.35rem;color:var(--navy);margin-bottom:.5rem;font-weight:900}
+  #form-success p{color:var(--text-mid);font-size:.88rem;max-width:440px;margin:0 auto;line-height:1.8}
+
+  /* ══ FOOTER ══ */
+  footer{background:var(--navy);color:#7a9ab8;text-align:center;padding:1.7rem 1rem;font-size:.76rem;line-height:1.9}
+  footer .f-logo{font-size:.92rem;font-weight:900;color:var(--teal);margin-bottom:.3rem}
+  footer a{color:var(--teal);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="學會 LOGO">AI × 醫學教學應用工作坊</div>
+    <span class="nav-tag">課後滿意度調查</span>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">115年7月18日（星期六）· 課後回饋</span>
+    <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學應用工作坊<br>課後滿意度調查表</h1>
+    <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
+    <div class="hero-intro">
+      親愛的老師您好：感謝您參與「AI × 醫學教學應用工作坊」。為瞭解本次課程的學習成效與實際需求，並作為未來課程規劃及改善的參考，敬請撥冗填寫本問卷。問卷約需 <span class="hl">3～5 分鐘</span>，填答結果<span class="hl">僅供整體分析使用</span>，感謝您的寶貴意見。
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="form-card">
+    <form id="survey-form" novalidate>
+
+      <!-- ══ PART 1 ══ -->
+      <div class="part-head"><span class="part-num">一</span><span class="part-title">基本資料</span></div>
+
+      <div class="q">
+        <span class="q-label"><span class="qn">1.</span>您的職類為何？<span class="q-note">（單選）</span><span class="req">*</span></span>
+        <div class="opts cols" id="opt-profession">
+          <label class="opt"><input type="radio" name="profession" value="醫師"> 醫師</label>
+          <label class="opt"><input type="radio" name="profession" value="藥事"> 藥事</label>
+          <label class="opt"><input type="radio" name="profession" value="醫事放射"> 醫事放射</label>
+          <label class="opt"><input type="radio" name="profession" value="醫事檢驗"> 醫事檢驗</label>
+          <label class="opt"><input type="radio" name="profession" value="護理"> 護理</label>
+          <label class="opt"><input type="radio" name="profession" value="營養"> 營養</label>
+          <label class="opt"><input type="radio" name="profession" value="呼吸治療"> 呼吸治療</label>
+          <label class="opt"><input type="radio" name="profession" value="聽力"> 聽力</label>
+          <label class="opt"><input type="radio" name="profession" value="語言治療"> 語言治療</label>
+          <label class="opt"><input type="radio" name="profession" value="專科護理師"> 專科護理師</label>
+          <label class="opt opt-other"><input type="radio" name="profession" value="其他"> 其他：
+            <input type="text" id="profession-other" placeholder="請填寫" autocomplete="off"></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <span class="q-label"><span class="qn">2.</span>過去 3 個月，您使用生成式 AI 工具的頻率大約為何？<span class="q-note">（單選；例如 ChatGPT、Claude、Gemini、Copilot 等）</span><span class="req">*</span></span>
+        <div class="opts" id="opt-freq">
+          <label class="opt"><input type="radio" name="aiFrequency" value="從未使用"> 從未使用</label>
+          <label class="opt"><input type="radio" name="aiFrequency" value="3個月內使用1～2天"> 3 個月內使用 1～2 天</label>
+          <label class="opt"><input type="radio" name="aiFrequency" value="平均每月使用1～3天"> 平均每月使用 1～3 天</label>
+          <label class="opt"><input type="radio" name="aiFrequency" value="平均每週使用1～2天"> 平均每週使用 1～2 天</label>
+          <label class="opt"><input type="radio" name="aiFrequency" value="平均每週使用3～4天"> 平均每週使用 3～4 天</label>
+          <label class="opt"><input type="radio" name="aiFrequency" value="平均每週使用5天以上"> 平均每週使用 5 天以上</label>
+        </div>
+      </div>
+
+      <!-- ══ PART 2 ══ -->
+      <div class="part-head"><span class="part-num">二</span><span class="part-title">課程學習與滿意度</span></div>
+      <p class="part-sub">請依您的實際感受評分（必填）</p>
+      <div id="likert-wrap"></div>
+
+      <!-- ══ PART 3 ══ -->
+      <div class="part-head"><span class="part-num">三</span><span class="part-title">後續需求與建議</span></div>
+
+      <div class="q">
+        <span class="q-label"><span class="qn">13.</span>未來您最希望進一步學習哪些主題？<span class="q-note">（可複選，非必填）</span></span>
+        <div class="opts" id="opt-topics">
+          <label class="opt"><input type="checkbox" name="topics" value="生成式AI基礎應用與提示詞設計"> 生成式 AI 基礎應用與提示詞設計</label>
+          <label class="opt"><input type="checkbox" name="topics" value="AI協助教材或簡報製作"> AI 協助教材或簡報製作</label>
+          <label class="opt"><input type="checkbox" name="topics" value="AI協助試題與評量設計"> AI 協助試題與評量設計</label>
+          <label class="opt"><input type="checkbox" name="topics" value="AI融入教學活動設計"> AI 融入教學活動設計</label>
+          <label class="opt"><input type="checkbox" name="topics" value="CLI／IDE人機協作與程式工具"> CLI／IDE 人機協作與程式工具</label>
+          <label class="opt"><input type="checkbox" name="topics" value="AI網頁或prototype製作"> AI 網頁或 prototype 製作</label>
+          <label class="opt"><input type="checkbox" name="topics" value="AI使用倫理、隱私與資訊安全"> AI 使用倫理、隱私與資訊安全</label>
+          <label class="opt"><input type="checkbox" name="topics" value="教學成果與實際案例分享"> 教學成果與實際案例分享</label>
+          <label class="opt opt-other"><input type="checkbox" name="topics" value="其他"> 其他：
+            <input type="text" id="topics-other" placeholder="請填寫" autocomplete="off"></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <span class="q-label"><span class="qn">14.</span>本次工作坊中，對您最有幫助的內容為何？<span class="q-note">（自由填答，非必填）</span></span>
+        <textarea name="helpful" placeholder="請分享對您最有幫助的內容……"></textarea>
+      </div>
+
+      <div class="q">
+        <span class="q-label"><span class="qn">15.</span>對於本次工作坊，您是否有其他意見或建議？<span class="q-note">（自由填答，非必填）</span></span>
+        <textarea name="suggestions" placeholder="歡迎給我們任何建議……"></textarea>
+      </div>
+
+      <div class="form-notice">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        本問卷採匿名方式進行，填答結果僅供整體分析與課程改善使用，不會對外揭露個別資料。
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn-submit">送出問卷</button>
+      </div>
+      <div id="form-error"></div>
+    </form>
+
+    <div id="form-success">
+      <div class="sico">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
+      </div>
+      <h3>問卷已送出！</h3>
+      <p>感謝您撥冗填寫「AI × 醫學教學應用工作坊」課後滿意度調查表，您的寶貴意見將作為未來課程規劃與改善的重要參考。</p>
+      <p style="margin-top:1rem;font-weight:700;color:var(--teal-deep);font-size:1rem">非常感謝您今天的參與！</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">AI × 醫學教學應用工作坊</div>
+  115年7月18日 · 課後滿意度調查<br>
+  <span style="display:inline-block;margin-top:.5rem">© 2026 台灣醫事聯合臨床技能發展學會 · All rights reserved.</span>
+</footer>
+
+<script>
+  /* ───────────────────────────────────────────────
+     Google Apps Script 部署後，把 /exec 網址貼在這裡
+  ─────────────────────────────────────────────── */
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycby5KoqqIS3moBn9liytya988oYgufLbwlXHGBsJevOJmOpvilASPt7otDwSLFlPVT63/exec';
+
+  /* ── 動態產生 Part 2 的 10 道評分題（Q3–Q12）── */
+  var LIKERT = [
+    ['q3',  '本次工作坊的課程內容符合我的學習需求。'],
+    ['q4',  '課程由 AI 基礎概念、人機協作到教學應用，整體安排脈絡清楚。'],
+    ['q5',  '講師的說明與示範清楚，有助於我理解課程內容。'],
+    ['q6',  '實作活動有助於我掌握 AI 工具與人機協作的操作方式。'],
+    ['q7',  '課程的進度與難易度整體適當。'],
+    ['q8',  '課程場地、設備與行政安排能支持本次學習活動。'],
+    ['q9',  '完成本次工作坊後，我更了解如何將生成式 AI 運用於教學或工作任務。'],
+    ['q10', '完成本次工作坊後，我有信心嘗試運用 AI 協助設計教材、活動、試題或其他教學成果。'],
+    ['q11', '未來我願意將本次所學運用於實際教學或工作中。'],
+    ['q12', '整體而言，我對本次工作坊感到滿意。']
+  ];
+  var CAPS = {1:'非常不同意',2:'不同意',3:'普通',4:'同意',5:'非常同意'};
+  (function(){
+    var wrap=document.getElementById('likert-wrap'),html='';
+    LIKERT.forEach(function(item,i){
+      var name=item[0], num=i+3, scale='';
+      for(var v=5;v>=1;v--){
+        scale+='<label class="lk"><input type="radio" name="'+name+'" value="'+v+'">'+
+               '<span class="lk-num">'+v+'</span><span class="lk-cap">'+CAPS[v]+'</span></label>';
+      }
+      html+='<div class="likert-item"><div class="likert-q"><span class="qn">'+num+'.</span>'+
+            item[1]+'</div><div class="likert-scale">'+scale+'</div></div>';
+    });
+    wrap.innerHTML=html;
+  })();
+
+  /* ── 「其他」輸入框連動 ── */
+  var profOther=document.getElementById('profession-other');
+  var topicsOther=document.getElementById('topics-other');
+  document.querySelectorAll('input[name="profession"]').forEach(function(r){
+    r.addEventListener('change',function(){
+      if(this.value!=='其他') profOther.value='';
+    });
+  });
+  profOther.addEventListener('focus',function(){
+    var o=document.querySelector('input[name="profession"][value="其他"]');
+    if(o) o.checked=true;
+  });
+  document.querySelector('input[name="topics"][value="其他"]').addEventListener('change',function(){
+    if(!this.checked) topicsOther.value='';
+  });
+  topicsOther.addEventListener('focus',function(){
+    document.querySelector('input[name="topics"][value="其他"]').checked=true;
+  });
+
+  /* ── 送出 ── */
+  document.getElementById('survey-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var form=e.target, btn=form.querySelector('.btn-submit'), err=document.getElementById('form-error');
+    function fail(msg,el){err.textContent=msg;err.style.display='block';if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+
+    // 職類
+    var prof=(form.querySelector('input[name="profession"]:checked')||{}).value||'';
+    if(!prof) return fail('請選擇第 1 題「您的職類」。',document.getElementById('opt-profession'));
+    var professionOther='';
+    if(prof==='其他'){
+      professionOther=profOther.value.trim();
+      if(!professionOther) return fail('第 1 題選擇「其他」時，請填寫您的職類。',profOther);
+    }
+    // AI 頻率
+    var freq=(form.querySelector('input[name="aiFrequency"]:checked')||{}).value||'';
+    if(!freq) return fail('請選擇第 2 題「AI 使用頻率」。',document.getElementById('opt-freq'));
+
+    // 評分 Q3–Q12
+    var ratings={};
+    for(var i=0;i<LIKERT.length;i++){
+      var nm=LIKERT[i][0];
+      var sel=form.querySelector('input[name="'+nm+'"]:checked');
+      if(!sel) return fail('請完成第 '+(i+3)+' 題的評分。',document.getElementsByClassName('likert-item')[i]);
+      ratings[nm]=sel.value;
+    }
+
+    // 主題（可複選，非必填）
+    var topicNodes=form.querySelectorAll('input[name="topics"]:checked');
+    var topicsOtherVal='';
+    var topicsArr=[];
+    topicNodes.forEach(function(n){
+      if(n.value==='其他'){
+        topicsOtherVal=topicsOther.value.trim();
+        if(!topicsOtherVal){/* 允許空白，但提示 */}
+        topicsArr.push(topicsOtherVal?('其他：'+topicsOtherVal):'其他');
+      }else{topicsArr.push(n.value);}
+    });
+
+    err.style.display='none';
+
+    var payload={
+      profession:prof, professionOther:professionOther,
+      aiFrequency:freq,
+      q3:ratings.q3,q4:ratings.q4,q5:ratings.q5,q6:ratings.q6,q7:ratings.q7,
+      q8:ratings.q8,q9:ratings.q9,q10:ratings.q10,q11:ratings.q11,q12:ratings.q12,
+      topics:topicsArr.join('、'), topicsOther:topicsOtherVal,
+      helpful:form.helpful.value.trim(),
+      suggestions:form.suggestions.value.trim()
+    };
+
+    if(GAS_URL==='PASTE_YOUR_APPS_SCRIPT_URL_HERE'){
+      return fail('尚未設定 Google Apps Script 網址（GAS_URL），請先完成部署設定。');
+    }
+
+    btn.textContent='送出中……';btn.disabled=true;
+    fetch(GAS_URL,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)})
+    .then(function(){
+      form.style.display='none';
+      var s=document.getElementById('form-success');
+      s.style.display='block';
+      s.scrollIntoView({behavior:'smooth',block:'center'});
+    })
+    .catch(function(){
+      fail('送出失敗，請稍後再試，或直接 Email 至 tsmcsd2018@gmail.com。');
+      btn.textContent='送出問卷';btn.disabled=false;
+    });
+  });
+</script>
+</body>
+</html>
