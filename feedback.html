@@ -32,7 +32,11 @@
   /* ══ HERO ══ */
   #hero{background:#fff;border-bottom:1px solid #e4eff4;position:relative;overflow:hidden}
   #hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(160deg,var(--lt-teal) 0%,#d4eef4 100%);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);pointer-events:none;z-index:0}
-  @media(max-width:640px){#hero::after{display:none}}
+  @media(max-width:640px){
+    #hero::after{display:none}
+    /* 手機：HERO 改為淡 teal 底色，與下方白色題目卡片明顯區隔 */
+    #hero{background:linear-gradient(160deg,#e9f6f8 0%,#dbeef2 100%);border-bottom:1px solid var(--border)}
+  }
   .hero-inner{max-width:1000px;margin:0 auto;padding:3rem 1.4rem 2.4rem;position:relative;z-index:1}
   .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--lt-teal);border:1px solid rgba(91,191,181,.35);color:var(--teal-dark);padding:.24rem .88rem;border-radius:20px;font-size:.72rem;letter-spacing:.06em;font-weight:600;margin-bottom:1rem}
   .hero-title{font-size:clamp(1.6rem,4.4vw,2.6rem);font-weight:900;color:var(--navy);letter-spacing:.02em;line-height:1.18;margin-bottom:.5rem;max-width:640px}
@@ -129,8 +133,8 @@
     <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
     <div class="hero-intro">
       <p class="greet">親愛的學員您好：</p>
-      <p>感謝您參與「AI × 醫學教學應用工作坊」！<br>為瞭解您對本次課程的學習體驗、學習收穫與後續需求，並作為未來課程規劃及精進的參考，誠摯邀請您撥冗填寫本問卷。</p>
-      <p>本問卷約需 <span class="hl">3～5 分鐘</span>，採<span class="hl">匿名</span>方式進行，填答結果<span class="hl">僅供整體分析與課程改善使用</span>。感謝您提供寶貴的意見與建議。</p>
+      <p>感謝您參與「AI × 醫學教學應用工作坊」！<br>為瞭解您對本次課程的學習體驗、學習收穫與後續需求，誠摯邀請您撥冗填寫本問卷；填答結果將進行整體分析，作為未來課程規劃及精進的參考。</p>
+      <p>本問卷約需 <span class="hl">2～3 分鐘</span>，採<span class="hl">匿名</span>方式進行。感謝您提供寶貴的意見與建議。</p>
     </div>
   </div>
 </header>
