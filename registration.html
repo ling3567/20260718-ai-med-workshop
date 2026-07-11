@@ -191,6 +191,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 .pill.nonmember{background:var(--amber-soft);color:var(--amber)}
 .pill.cat{background:#eef2f1;color:var(--muted)}
 .pill.done{background:var(--green-soft);color:var(--green)}
+.pill.staff{background:var(--navy);color:#fff}
 .d-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .fld{
   background:var(--lt-teal);border:1px solid var(--border);border-radius:11px;
@@ -417,7 +418,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 <!-- ============ 統計頁 ============ -->
 <div class="page" id="page-stats">
   <div class="counters">
-    <div class="counter"><b id="stTotal">0</b><span>報名總人數</span></div>
+    <div class="counter"><b id="stTotal">0</b><span>應到總人數</span></div>
     <div class="counter"><b id="stChecked">0</b><span>已報到</span></div>
     <div class="counter"><b id="stRate">0%</b><span>報到率</span></div>
   </div>
@@ -705,7 +706,9 @@ function renderDetail(){
     '<div class="detail">'
     + '<div class="d-top"><div class="d-ava '+avaCls+'">'+esc(r.name.charAt(0))+'</div>'
     + '<div><div class="d-name">'+esc(r.name)+'</div><div class="pills">'
-    + (r.isMember?'<span class="pill member">'+esc(r.memberType||'本會會員')+'</span>':'<span class="pill nonmember">'+esc(r.memberType||'非會員')+'</span>')
+    + (r.extra
+        ? '<span class="pill staff">'+esc(r.group||'工作人員')+'</span>'
+        : (r.isMember?'<span class="pill member">'+esc(r.memberType||'本會會員')+'</span>':'<span class="pill nonmember">'+esc(r.memberType||'非會員')+'</span>'))
     + (r.category?'<span class="pill cat">'+esc(r.category)+'</span>':'')
     + (r.checkedIn?'<span class="pill done">已報到</span>':'')
     + '</div></div></div>'
@@ -817,8 +820,9 @@ function renderStats(){
   $('stProf').innerHTML = profRows.length ? profRows.map(barRow).join('')
     : '<div class="list-empty">尚無資料</div>';
 
-  let cPersonal = 0, cGroup = 0, cNon = 0, cOther = 0;
+  let cPersonal = 0, cGroup = 0, cNon = 0, cOther = 0, cStaff = 0;
   state.regs.forEach(r=>{
+    if(r.extra){ cStaff++; return; }          // 工作人員等非報名者不計入會員統計
     const t = String(r.memberType || '').trim();
     if(!r.isMember){ cNon++; }
     else if(t.indexOf('個人') !== -1){ cPersonal++; }
@@ -827,7 +831,8 @@ function renderStats(){
   });
   $('stMemberLine').textContent =
     '本會個人會員 ' + cPersonal + ' 位｜團體會員 ' + cGroup + ' 位｜非會員 ' + cNon + ' 位'
-    + (cOther ? '｜其他會員 ' + cOther + ' 位' : '');
+    + (cOther ? '｜其他會員 ' + cOther + ' 位' : '')
+    + (cStaff ? '｜工作人員等 ' + cStaff + ' 位' : '');
 
   // 服務單位（堆疊式，完整顯示名稱）
   const orgMap = {};
