@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="date=no, address=no, email=no">
 <title>報到系統｜AI × 醫學教學應用工作坊</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -62,9 +64,10 @@ header{
 .hd-logo img{width:100%;height:100%;object-fit:contain;padding:3px}
 .brand{display:flex;flex-direction:column;gap:2px;min-width:0}
 .brand .kicker{
-  font-size:11px;letter-spacing:.22em;color:var(--teal);
+  font-size:11px;letter-spacing:.22em;color:#8fe4d8;
   text-transform:uppercase;font-weight:700;
 }
+.brand .kicker b{color:#fff;font-weight:800;letter-spacing:.12em}
 .brand h1{
   font-family:'Noto Sans TC','Microsoft JhengHei',sans-serif;font-weight:900;
   font-size:21px;line-height:1.25;letter-spacing:.02em;white-space:nowrap;
@@ -317,21 +320,32 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   .checkin-grid{grid-template-columns:200px 1fr 1fr;gap:10px}
   .page{padding:14px 14px 26px}
 }
-/* 手機：全部單欄堆疊 */
+/* 手機：App-shell — 固定標題列 + 單一捲動區（消除巢狀捲軸） */
 @media (max-width:720px){
-  header{padding:12px 16px;gap:12px}
-  .brand{order:1;flex:1 1 auto}
-  .brand h1{white-space:normal;font-size:17px}
-  .brand .meta{font-size:11px;line-height:1.4}
-  .hd-logo{width:36px;height:36px}
+  html{height:100%}
+  body{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+  /* 標題列固定，不隨內容捲動 */
+  header{flex:none;padding:10px 14px 8px;gap:9px}
+  .brand{order:1;flex:1 1 auto;min-width:0}
+  .brand h1{white-space:normal;font-size:16px;line-height:1.2}
+  .brand .kicker{font-size:10px;letter-spacing:.16em}
+  .brand .meta{font-size:10.5px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hd-logo{width:34px;height:34px}
   .hd-spacer{display:none}
-  .hd-stat{order:2}
-  .btn-refresh{order:3}
-  nav{order:4;flex:1 1 100%;justify-content:stretch}
-  nav button{flex:1;text-align:center;padding:9px 6px}
-  .page{padding:12px 14px 24px}
+  .hd-stat{order:2;padding:5px 11px}
+  .hd-stat b{font-size:20px}
+  .hd-sync{order:3;gap:7px}
+  .btn-refresh{order:4;padding:6px 10px}
+  nav{order:5;flex:1 1 100%;justify-content:stretch;gap:5px;margin-top:1px}
+  nav button{flex:1;text-align:center;padding:8px 6px;font-size:13.5px}
+  /* 內容區：唯一捲動區 */
+  .page{max-width:none;margin:0;padding:0}
+  .page.active{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 26px}
   .checkin-grid{grid-template-columns:1fr;gap:12px}
-  .list{max-height:46vh}
+  .list{max-height:none;overflow:visible;min-height:0}   /* 名單不再自成捲軸 */
+  /* 搜尋框釘在捲動區頂端，隨時可搜尋 */
+  .checkin-grid > .panel:first-child{overflow:visible}
+  .search-wrap{position:sticky;top:0;z-index:6;background:var(--panel);border-radius:14px 14px 0 0}
   .d-fields{grid-template-columns:1fr}
   .fld.full{grid-column:auto}
   .d-name{font-size:20px}
@@ -339,7 +353,6 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   .counters{grid-template-columns:1fr;gap:1px}
   .stats-grid{grid-template-columns:1fr}
   .stamp .v{font-size:26px}
-  .hd-sync{order:2}
   #toast{left:14px;right:14px;bottom:16px;transform:translateY(16px);text-align:center}
   #toast.show{transform:translateY(0)}
 }
@@ -355,7 +368,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
     <img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="台灣醫事聯合臨床技能發展學會" onerror="this.parentNode.style.display='none'">
   </div>
   <div class="brand">
-    <div class="kicker">CHECK-IN · 1150718</div>
+    <div class="kicker">CHECK-IN&nbsp;·&nbsp;<b>1150718</b></div>
     <h1>AI × 醫學教學應用工作坊</h1>
     <div class="meta">115年7月18日（六）13:15–17:30｜奇美醫院 第五醫療大樓 5樓 552會議室</div>
   </div>
