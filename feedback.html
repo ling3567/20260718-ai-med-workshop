@@ -74,7 +74,7 @@
   .opt input{width:16px;height:16px;accent-color:var(--teal);flex-shrink:0}
   .opt:has(input:checked){background:var(--lt-teal);border-color:var(--teal);font-weight:500}
   .opt-other{align-items:center}
-  .opt-other input[type="text"]{flex:1;min-width:80px;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:.2rem .25rem .4rem;line-height:1.6;font-family:var(--font);font-size:.84rem;color:var(--text);outline:none}
+  .opt-other input[type="text"]{flex:1;min-width:80px;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:.3rem .3rem .55rem;line-height:1.7;font-family:var(--font);font-size:.84rem;color:var(--text);outline:none}
   .opt-other input[type="text"]:focus{border-bottom-color:var(--teal)}
 
   /* Likert */
@@ -109,7 +109,8 @@
   #form-success{display:none;text-align:center;padding:2.6rem 1rem}
   #form-success .sico{margin-bottom:.9rem}
   #form-success h3{font-size:1.35rem;color:var(--navy);margin-bottom:.5rem;font-weight:900}
-  #form-success p{color:var(--text-mid);font-size:.88rem;max-width:440px;margin:0 auto;line-height:1.8}
+  #form-success p{color:var(--text-mid);font-size:.88rem;max-width:540px;margin:0 auto;line-height:1.9;word-break:normal;overflow-wrap:break-word}
+  #form-success p.thanks{margin-top:1.1rem;font-weight:700;color:var(--teal-deep);font-size:1rem;line-height:1.8}
 
   /* ══ FOOTER ══ */
   footer{background:var(--navy);color:#7a9ab8;text-align:center;padding:1.1rem 1rem;font-size:.76rem;line-height:1.5}
@@ -226,8 +227,8 @@
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
       </div>
       <h3>問卷已送出！</h3>
-      <p>感謝您撥冗完成「AI × 醫學教學應用工作坊」課後回饋問卷。<br>您的回饋將協助我們持續精進課程內容與活動安排。</p>
-      <p style="margin-top:1rem;font-weight:700;color:var(--teal-deep);font-size:1rem">再次感謝您今天的參與，期待未來有機會與您再次相見！</p>
+      <p>感謝您撥冗完成本次「AI × 醫學教學應用工作坊」課後回饋問卷，您的回饋將協助我們持續精進課程內容與活動安排。</p>
+      <p class="thanks">再次感謝您今天的參與，期待未來能與您再次相見！</p>
     </div>
   </div>
 </div>
@@ -346,17 +347,26 @@
       return fail('尚未設定 Google Apps Script 網址（GAS_URL），請先完成部署設定。');
     }
 
-    btn.textContent='送出中……';btn.disabled=true;
-    fetch(GAS_URL,{method:'POST',mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify(payload)})
-    .then(function(){
+    btn.textContent='送出中，請稍候…';btn.disabled=true;
+
+    var shown=false;
+    function showSuccess(){
+      if(shown) return; shown=true;
       form.style.display='none';
       var s=document.getElementById('form-success');
       s.style.display='block';
       s.scrollIntoView({behavior:'smooth',block:'center'});
-    })
+    }
+    // 手機網路較慢時，最多等 1.8 秒就先顯示完成畫面（請求仍在背景送出）
+    var fallback=setTimeout(showSuccess,1800);
+
+    fetch(GAS_URL,{method:'POST',mode:'no-cors',keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)})
+    .then(function(){ clearTimeout(fallback); showSuccess(); })
     .catch(function(){
+      clearTimeout(fallback);
+      if(shown) return; // 已顯示完成畫面則不再跳錯誤
       fail('送出失敗，請稍後再試，或直接 Email 至 tsmcsd2018@gmail.com。');
       btn.textContent='送出問卷';btn.disabled=false;
     });
