@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -40,6 +41,9 @@
   .hero-subtitle{font-size:clamp(.85rem,2vw,1rem);color:var(--teal-dark);font-weight:600;margin-bottom:1.1rem}
   .hero-intro{max-width:660px;background:linear-gradient(145deg,#f0fbf9 0%,#e6f5f8 100%);border:1px solid rgba(91,191,181,.2);border-radius:14px;padding:1.1rem 1.3rem;font-size:.85rem;color:var(--text-mid);line-height:1.85}
   .hero-intro .hl{font-weight:700;color:var(--teal-deep)}
+  .hero-intro p{margin-bottom:.8rem}
+  .hero-intro p:last-child{margin-bottom:0}
+  .hero-intro .greet{font-weight:700;color:var(--navy)}
 
   /* ══ SECTION / FORM ══ */
   .wrap{max-width:1000px;margin:0 auto;padding:2.4rem 1.4rem 3rem}
@@ -55,7 +59,7 @@
   .q{margin-bottom:1.55rem}
   .q-label{display:block;font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.6rem;line-height:1.6}
   .q-label .qn{color:var(--teal-dark);margin-right:.15rem}
-  .q-label .req{color:#d94040;margin-left:3px;font-weight:700}
+  .req{color:#d94040;margin-left:3px;font-weight:700}
   .q-note{font-weight:400;color:var(--text-muted);font-size:.78rem}
 
   /* choice list (single/multi) */
@@ -77,8 +81,8 @@
   .likert-item:last-child{border-bottom:none}
   .likert-q{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.7rem;line-height:1.6}
   .likert-q .qn{color:var(--teal-dark);font-weight:700;margin-right:.15rem}
-  .likert-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem;max-width:420px}
-  .lk{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;padding:.5rem .2rem;background:#f8fcfd;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;text-align:center}
+  .likert-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;width:100%}
+  .lk{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;padding:.7rem .3rem;background:#f8fcfd;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .15s;text-align:center}
   .lk input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;top:0;left:0;margin:0}
   .lk .lk-num{font-size:1.05rem;font-weight:900;color:var(--text-muted);line-height:1}
   .lk .lk-cap{font-size:.56rem;color:var(--text-muted);line-height:1.1}
@@ -114,7 +118,7 @@
 
 <nav id="top-nav">
   <div class="nav-inner">
-    <div class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="學會 LOGO">AI × 醫學教學應用工作坊</div>
+    <div class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="學會 LOGO">台灣醫事聯合臨床技能發展學會</div>
     <span class="nav-tag">課後滿意度調查</span>
   </div>
 </nav>
@@ -125,7 +129,9 @@
     <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學應用工作坊<br>課後滿意度調查表</h1>
     <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
     <div class="hero-intro">
-      親愛的老師您好：感謝您參與「AI × 醫學教學應用工作坊」。為瞭解本次課程的學習成效與實際需求，並作為未來課程規劃及改善的參考，敬請撥冗填寫本問卷。問卷約需 <span class="hl">3～5 分鐘</span>，填答結果<span class="hl">僅供整體分析使用</span>，感謝您的寶貴意見。
+      <p class="greet">親愛的老師您好：</p>
+      <p>感謝您參與「AI × 醫學教學應用工作坊」！<br>為瞭解您對本次課程的學習體驗、學習收穫與後續需求，並作為未來課程規劃及精進的參考，誠摯邀請您撥冗填寫本問卷。</p>
+      <p>本問卷約需 <span class="hl">3～5 分鐘</span>，採<span class="hl">匿名</span>方式進行，填答結果<span class="hl">僅供整體分析與課程改善使用</span>。感謝您提供寶貴的意見與建議。</p>
     </div>
   </div>
 </header>
@@ -169,7 +175,7 @@
 
       <!-- ══ PART 2 ══ -->
       <div class="part-head"><span class="part-num">二</span><span class="part-title">課程學習與滿意度</span></div>
-      <p class="part-sub">請依您的實際感受評分（必填）</p>
+      <p class="part-sub">請依您參與本次工作坊後的實際感受進行評分。</p>
       <div id="likert-wrap"></div>
 
       <!-- ══ PART 3 ══ -->
@@ -203,7 +209,7 @@
 
       <div class="form-notice">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        本問卷採匿名方式進行，填答結果僅供整體分析與課程改善使用，不會對外揭露個別資料。
+        本問卷採匿名方式進行，所有填答內容僅供整體分析與課程精進使用。
       </div>
 
       <div class="submit-row">
@@ -217,8 +223,8 @@
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
       </div>
       <h3>問卷已送出！</h3>
-      <p>感謝您撥冗填寫「AI × 醫學教學應用工作坊」課後滿意度調查表，您的寶貴意見將作為未來課程規劃與改善的重要參考。</p>
-      <p style="margin-top:1rem;font-weight:700;color:var(--teal-deep);font-size:1rem">非常感謝您今天的參與！</p>
+      <p>感謝您撥冗完成「AI × 醫學教學應用工作坊」課後滿意度調查。<br>您的回饋將協助我們持續精進課程內容與活動安排。</p>
+      <p style="margin-top:1rem;font-weight:700;color:var(--teal-deep);font-size:1rem">再次感謝您今天的參與，期待未來有機會與您再次相見！</p>
     </div>
   </div>
 </div>
@@ -258,7 +264,7 @@
                '<span class="lk-num">'+v+'</span><span class="lk-cap">'+CAPS[v]+'</span></label>';
       }
       html+='<div class="likert-item"><div class="likert-q"><span class="qn">'+num+'.</span>'+
-            item[1]+'</div><div class="likert-scale">'+scale+'</div></div>';
+            item[1]+'<span class="req">*</span></div><div class="likert-scale">'+scale+'</div></div>';
     });
     wrap.innerHTML=html;
   })();
