@@ -92,6 +92,24 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 .btn-refresh:hover{background:rgba(255,255,255,.08)}
 .btn-refresh svg{width:15px;height:15px}
 .btn-refresh.spin svg{animation:spin 1s linear infinite}
+/* 自動更新開關 */
+.hd-sync{display:flex;align-items:center;gap:9px}
+.switch{position:relative;display:inline-block;width:38px;height:22px;flex:none;cursor:pointer}
+.switch input{opacity:0;width:0;height:0;position:absolute}
+.switch .track{
+  position:absolute;inset:0;border-radius:99px;
+  background:rgba(255,255,255,.22);transition:.2s;
+}
+.switch .track::before{
+  content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:.2s;
+}
+.switch input:checked + .track{background:var(--teal)}
+.switch input:checked + .track::before{transform:translateX(16px)}
+.sync-txt{display:flex;flex-direction:column;line-height:1.25}
+.sync-txt .lbl{font-size:12px;color:#cfe0ec;font-weight:500}
+.sync-txt .last{font-size:11px;color:#8fb0c6;font-variant-numeric:tabular-nums}
+.sync-txt .last.live{color:var(--teal)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- Pages ---------- */
@@ -207,7 +225,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   border:1px solid #ecc8c8;border-radius:8px;padding:6px 13px;background:#fff;
 }
 .btn-undo:hover{background:#fdf3f3}
-.badge-grp-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grp-only{display:block}
 .stamp{
   border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;
   display:flex;flex-direction:column;gap:3px;background:#fff;
@@ -315,18 +333,14 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   .list{max-height:46vh}
   .d-fields{grid-template-columns:1fr}
   .fld.full{grid-column:auto}
-  .badge-grp-row{grid-template-columns:1fr 1fr}
   .d-name{font-size:20px}
   .d-ava{width:48px;height:48px;font-size:20px}
   .counters{grid-template-columns:1fr;gap:1px}
   .stats-grid{grid-template-columns:1fr}
   .stamp .v{font-size:26px}
+  .hd-sync{order:2}
   #toast{left:14px;right:14px;bottom:16px;transform:translateY(16px);text-align:center}
   #toast.show{transform:translateY(0)}
-}
-/* 極窄：識別證/組別卡也堆疊 */
-@media (max-width:380px){
-  .badge-grp-row{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -346,7 +360,11 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   </div>
   <div class="hd-spacer"></div>
   <div class="hd-stat"><b id="hdChecked">0</b><span>已報到 / <span id="hdTotal">0</span> 人</span></div>
-  <button class="btn-refresh" id="btnRefresh" title="重新載入名單">
+  <div class="hd-sync">
+    <label class="switch"><input type="checkbox" id="autoToggle" checked><span class="track"></span></label>
+    <div class="sync-txt"><span class="lbl">自動更新</span><span class="last" id="lastUpd">尚未更新</span></div>
+  </div>
+  <button class="btn-refresh" id="btnRefresh" title="立即重新載入名單">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 4v5h-5"/></svg>
     更新
   </button>
@@ -389,7 +407,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
     <div class="panel">
       <div class="panel-h">報到動作</div>
       <div class="actions" id="actionsBody">
-        <div class="act-note">選擇學員後，此處會顯示報到按鈕、識別證編號與組別引導。</div>
+        <div class="act-note">選擇學員後，此處會顯示報到按鈕與組別引導。</div>
       </div>
     </div>
 
@@ -432,9 +450,9 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
       <button class="btn-save" id="btnSave">儲存並載入名單</button>
       <ol>
         <li>建立新 Google Sheet，貼上 <code>20260718-Checkin-AppScript.gs</code></li>
-        <li>執行 <code>initAllSheets()</code> 建立「報到紀錄／識別證編號／分組名單」</li>
+        <li>執行 <code>initAllSheets()</code> 建立「報到紀錄／分組名單」</li>
         <li>執行 <code>testConnection()</code> 確認可讀取報名資料</li>
-        <li>在「識別證編號」「分組名單」填入資料（組別填：第1組～第6組）</li>
+        <li>在「分組名單」填入資料（組別填：第1組～第6組）</li>
         <li>部署為網頁應用程式（執行身分：我／存取：所有人）→ 複製 URL 貼到上方</li>
       </ol>
     </div>
@@ -448,15 +466,21 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 
 /* ================= 狀態 ================= */
 const LS_KEY = 'ws0718_checkin_api';
+const LS_AUTO = 'ws0718_checkin_auto';
 /* 報到系統已部署的 Web App URL（預設值，毋須手動設定即可使用） */
 const DEFAULT_API = 'https://script.google.com/macros/s/AKfycbyYxKfFohSlMME5HbEOBhKWAvV0Ooirul1gWPyOI8QpyH3OKGD-nq9BFDgKEgPgKaiYmw/exec';
+const AUTO_INTERVAL = 20000;   // 背景自動更新間隔（毫秒）
+const PENDING_TTL = 40000;     // 本地報到動作的保護期（毫秒），避免輪詢覆蓋剛送出的狀態
 const state = {
   api: localStorage.getItem(LS_KEY) || DEFAULT_API,
   regs: [],
   q: '',
   group: null,     // null=全部
   selKey: null,
-  loading: false
+  loading: false,
+  auto: localStorage.getItem(LS_AUTO) !== '0',  // 預設開啟
+  timer: null,
+  pending: {}       // key -> { action:'checkin'|'undo', at:timestamp, time:string }
 };
 const collator = new Intl.Collator('zh-Hant-TW-u-co-stroke');
 const $ = id => document.getElementById(id);
@@ -474,24 +498,88 @@ function nowStr(){
 }
 
 /* ================= 資料載入 ================= */
-async function loadData(){
+/* silent=true：背景更新，不顯示「載入中」、不打斷搜尋與選取 */
+async function loadData(silent){
   if(!state.api){ switchPage('setup'); return; }
+  if(state.loading) return;            // 避免重疊請求
   state.loading = true;
   $('btnRefresh').classList.add('spin');
-  $('list').innerHTML = '<div class="list-empty">載入中…</div>';
+  if(!silent && !state.regs.length) $('list').innerHTML = '<div class="list-empty">載入中…</div>';
   try{
     const res = await fetch(state.api + '?action=checkin_list', { method:'GET' });
     const data = await res.json();
     if(data.status !== 'success') throw new Error(data.message || '回傳資料異常');
-    state.regs = data.registrations || [];
-    renderAll();
-    toast('名單已更新（' + state.regs.length + ' 人）');
+    const serverRegs = data.registrations || [];
+    if(silent){
+      mergeRegs(serverRegs);           // 保留本地剛送出的報到狀態
+    }else{
+      applyPending(serverRegs);
+      state.regs = serverRegs;
+    }
+    markUpdated(true);
+    if(silent) renderSilent();          // 不重置搜尋/選取
+    else { renderAll(); toast('名單已更新（' + state.regs.length + ' 人）'); }
   }catch(err){
-    $('list').innerHTML = '<div class="list-empty">⚠ 無法載入名單<br>' + esc(err.message) + '<br><br>請至「設定」確認 Web App URL。</div>';
+    if(!silent){
+      $('list').innerHTML = '<div class="list-empty">⚠ 無法載入名單<br>' + esc(err.message) + '<br><br>請至「設定」確認 Web App URL。</div>';
+    }
+    markUpdated(false);
   }finally{
     state.loading = false;
     $('btnRefresh').classList.remove('spin');
   }
+}
+
+/* 把本地未完成的報到動作套用到伺服器資料（避免閃回舊狀態）*/
+function applyPending(serverRegs){
+  const now = Date.now();
+  serverRegs.forEach(sr=>{
+    const k = keyOf(sr);
+    const p = state.pending[k];
+    if(!p) return;
+    if(now - p.at > PENDING_TTL){ delete state.pending[k]; return; }
+    const raw = sr.checkedIn;
+    if(p.action === 'checkin'){
+      if(raw){ delete state.pending[k]; }          // 伺服器已反映，解除保護
+      else { sr.checkedIn = true; if(!sr.checkinTime) sr.checkinTime = p.time || ''; }
+    }else{ // undo
+      if(!raw){ delete state.pending[k]; }
+      else { sr.checkedIn = false; sr.checkinTime = ''; }
+    }
+  });
+}
+
+/* 背景合併：更新報到狀態/名單，但沿用目前的搜尋與選取 */
+function mergeRegs(serverRegs){
+  applyPending(serverRegs);
+  state.regs = serverRegs;
+}
+
+function markUpdated(ok){
+  const el = $('lastUpd');
+  if(!el) return;
+  if(ok){
+    el.textContent = '最後更新 ' + nowStr().slice(11);
+    el.classList.add('live');
+    clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('live'), 1200);
+  }else{
+    el.textContent = '更新失敗，將自動重試';
+  }
+}
+
+/* ================= 自動更新 ================= */
+function startAuto(){
+  stopAuto();
+  if(!state.auto) return;
+  state.timer = setInterval(()=>{ if(!document.hidden) loadData(true); }, AUTO_INTERVAL);
+}
+function stopAuto(){ if(state.timer){ clearInterval(state.timer); state.timer = null; } }
+function setAuto(on){
+  state.auto = on;
+  localStorage.setItem(LS_AUTO, on ? '1' : '0');
+  const t = $('autoToggle'); if(t) t.checked = on;
+  if(on){ startAuto(); loadData(true); }
+  else { stopAuto(); const el=$('lastUpd'); if(el) el.textContent = '自動更新已關閉'; }
 }
 
 /* ================= 同步（fire-and-forget） ================= */
@@ -511,6 +599,17 @@ function renderAll(){
   renderList();
   renderDetail();
   renderStats();
+}
+
+/* 背景更新用：不重置搜尋框、選取、捲動位置 */
+function renderSilent(){
+  const listEl = $('list');
+  const scroll = listEl ? listEl.scrollTop : 0;
+  renderHeaderStats();
+  renderList();
+  renderDetail();
+  renderStats();
+  if(listEl) listEl.scrollTop = scroll;
 }
 
 function renderHeaderStats(){
@@ -636,7 +735,7 @@ function fld(k,v,icon,full){
 function renderActions(r){
   const box = $('actionsBody');
   if(!r){
-    box.innerHTML = '<div class="act-note">選擇學員後，此處會顯示報到按鈕、識別證編號與組別引導。</div>';
+    box.innerHTML = '<div class="act-note">選擇學員後，此處會顯示報到按鈕與組別引導。</div>';
     return;
   }
   let html = '';
@@ -652,11 +751,7 @@ function renderActions(r){
       + '<div><div class="big">'+esc(r.name)+'　完成報到</div>'
       + '<div class="sub">點按後即記錄報到時間</div></div></button>';
   }
-  html += '<div class="badge-grp-row">'
-    + '<div class="stamp"><div class="k">識別證編號</div>'
-    + (r.badge?'<div class="v">'+esc(r.badge)+'</div><div class="hint">請給予識別證</div>'
-              :'<div class="v none">未設定</div>')
-    + '</div>'
+  html += '<div class="grp-only">'
     + '<div class="stamp grp"><div class="k">組別</div>'
     + (r.group?'<div class="v">'+esc(r.group)+'</div><div class="hint">請引導至 '+esc(r.group)+' 座位區</div>'
               :'<div class="v none">未分組</div>')
@@ -673,6 +768,7 @@ function renderActions(r){
 function doCheckin(r){
   r.checkedIn = true;
   r.checkinTime = nowStr();
+  state.pending[keyOf(r)] = { action:'checkin', at:Date.now(), time:r.checkinTime };
   postAction({ action:'checkin', name:r.name, idNumber:r.idNumber });
   toast('✓ ' + r.name + ' 報到完成' + (r.group?('｜'+r.group):''));
   renderAll();
@@ -681,6 +777,7 @@ function doUndo(r){
   if(!confirm('確定要取消「'+r.name+'」的報到紀錄嗎？')) return;
   r.checkedIn = false;
   r.checkinTime = '';
+  state.pending[keyOf(r)] = { action:'undo', at:Date.now() };
   postAction({ action:'undo_checkin', name:r.name, idNumber:r.idNumber });
   toast(r.name + ' 已取消報到');
   renderAll();
@@ -802,7 +899,9 @@ document.querySelectorAll('nav button').forEach(b=>{
 
 /* ================= 事件 ================= */
 $('q').addEventListener('input', e=>{ state.q = e.target.value; renderList(); });
-$('btnRefresh').onclick = () => { if(!state.loading) loadData(); };
+$('btnRefresh').onclick = () => { if(!state.loading) loadData(false); };
+$('autoToggle').checked = state.auto;
+$('autoToggle').addEventListener('change', e=> setAuto(e.target.checked));
 $('btnSave').onclick = () => {
   const url = $('apiUrl').value.trim();
   if(!/^https:\/\/script\.google\.com\/.+\/exec$/.test(url)){
@@ -812,12 +911,20 @@ $('btnSave').onclick = () => {
   state.api = url;
   localStorage.setItem(LS_KEY, url);
   switchPage('checkin');
-  loadData();
+  loadData(false).then(startAuto);
 };
+/* 分頁切回前景時，若開啟自動更新則立即補抓一次 */
+document.addEventListener('visibilitychange', ()=>{
+  if(!document.hidden && state.auto && state.api) loadData(true);
+});
 
 /* ================= 啟動 ================= */
-if(state.api) loadData();
-else switchPage('setup');
+if(state.api){
+  loadData(false).then(()=>{ if(state.auto) startAuto(); });
+}else{
+  switchPage('setup');
+  $('lastUpd').textContent = '尚未設定';
+}
 </script>
 </body>
 </html>
