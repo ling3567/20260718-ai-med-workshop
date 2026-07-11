@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>課後滿意度調查｜AI × 醫學教學應用工作坊</title>
-<meta name="description" content="AI × 醫學教學應用工作坊 課後滿意度調查表 — 115年7月18日">
+<title>課後回饋問卷｜AI × 醫學教學應用工作坊</title>
+<meta name="description" content="AI × 醫學教學應用工作坊 課後回饋問卷 — 115年7月18日">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -39,7 +38,7 @@
   .hero-title{font-size:clamp(1.6rem,4.4vw,2.6rem);font-weight:900;color:var(--navy);letter-spacing:.02em;line-height:1.18;margin-bottom:.5rem;max-width:640px}
   .hero-title .x-accent{color:var(--teal)}
   .hero-subtitle{font-size:clamp(.85rem,2vw,1rem);color:var(--teal-dark);font-weight:600;margin-bottom:1.1rem}
-  .hero-intro{max-width:660px;background:linear-gradient(145deg,#f0fbf9 0%,#e6f5f8 100%);border:1px solid rgba(91,191,181,.2);border-radius:14px;padding:1.1rem 1.3rem;font-size:.85rem;color:var(--text-mid);line-height:1.85}
+  .hero-intro{max-width:660px;background:#fff;border:1px solid #e2eef2;border-left:4px solid var(--teal);border-radius:12px;padding:1.3rem 1.5rem;font-size:.85rem;color:var(--text-mid);line-height:1.85;box-shadow:0 6px 24px rgba(27,58,92,.08)}
   .hero-intro .hl{font-weight:700;color:var(--teal-deep)}
   .hero-intro p{margin-bottom:.8rem}
   .hero-intro p:last-child{margin-bottom:0}
@@ -71,7 +70,7 @@
   .opt input{width:16px;height:16px;accent-color:var(--teal);flex-shrink:0}
   .opt:has(input:checked){background:var(--lt-teal);border-color:var(--teal);font-weight:500}
   .opt-other{align-items:center}
-  .opt-other input[type="text"]{flex:1;min-width:80px;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:.15rem .2rem;font-family:var(--font);font-size:.84rem;color:var(--text);outline:none}
+  .opt-other input[type="text"]{flex:1;min-width:80px;border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:.2rem .25rem .4rem;line-height:1.6;font-family:var(--font);font-size:.84rem;color:var(--text);outline:none}
   .opt-other input[type="text"]:focus{border-bottom-color:var(--teal)}
 
   /* Likert */
@@ -109,8 +108,8 @@
   #form-success p{color:var(--text-mid);font-size:.88rem;max-width:440px;margin:0 auto;line-height:1.8}
 
   /* ══ FOOTER ══ */
-  footer{background:var(--navy);color:#7a9ab8;text-align:center;padding:1.7rem 1rem;font-size:.76rem;line-height:1.9}
-  footer .f-logo{font-size:.92rem;font-weight:900;color:var(--teal);margin-bottom:.3rem}
+  footer{background:var(--navy);color:#7a9ab8;text-align:center;padding:1.1rem 1rem;font-size:.76rem;line-height:1.5}
+  footer .f-logo{font-size:.92rem;font-weight:900;color:var(--teal);margin-bottom:.15rem}
   footer a{color:var(--teal);text-decoration:none}
 </style>
 </head>
@@ -119,17 +118,17 @@
 <nav id="top-nav">
   <div class="nav-inner">
     <div class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="學會 LOGO">台灣醫事聯合臨床技能發展學會</div>
-    <span class="nav-tag">課後滿意度調查</span>
+    <span class="nav-tag">課後回饋問卷</span>
   </div>
 </nav>
 
 <header id="hero">
   <div class="hero-inner">
-    <span class="hero-badge">115年7月18日（星期六）· 課後回饋</span>
-    <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學應用工作坊<br>課後滿意度調查表</h1>
+    <span class="hero-badge">115年7月18日</span>
+    <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學應用工作坊<br>課後回饋問卷</h1>
     <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
     <div class="hero-intro">
-      <p class="greet">親愛的老師您好：</p>
+      <p class="greet">親愛的學員您好：</p>
       <p>感謝您參與「AI × 醫學教學應用工作坊」！<br>為瞭解您對本次課程的學習體驗、學習收穫與後續需求，並作為未來課程規劃及精進的參考，誠摯邀請您撥冗填寫本問卷。</p>
       <p>本問卷約需 <span class="hl">3～5 分鐘</span>，採<span class="hl">匿名</span>方式進行，填答結果<span class="hl">僅供整體分析與課程改善使用</span>。感謝您提供寶貴的意見與建議。</p>
     </div>
@@ -182,7 +181,7 @@
       <div class="part-head"><span class="part-num">三</span><span class="part-title">後續需求與建議</span></div>
 
       <div class="q">
-        <span class="q-label"><span class="qn">13.</span>未來您最希望進一步學習哪些主題？<span class="q-note">（可複選，非必填）</span></span>
+        <span class="q-label"><span class="qn">13.</span>未來您最希望進一步學習哪些主題？<span class="q-note">（可複選）</span></span>
         <div class="opts" id="opt-topics">
           <label class="opt"><input type="checkbox" name="topics" value="生成式AI基礎應用與提示詞設計"> 生成式 AI 基礎應用與提示詞設計</label>
           <label class="opt"><input type="checkbox" name="topics" value="AI協助教材或簡報製作"> AI 協助教材或簡報製作</label>
@@ -198,12 +197,12 @@
       </div>
 
       <div class="q">
-        <span class="q-label"><span class="qn">14.</span>本次工作坊中，對您最有幫助的內容為何？<span class="q-note">（自由填答，非必填）</span></span>
+        <span class="q-label"><span class="qn">14.</span>本次工作坊中，對您最有幫助的內容為何？<span class="q-note">（自由填答）</span></span>
         <textarea name="helpful" placeholder="請分享對您最有幫助的內容……"></textarea>
       </div>
 
       <div class="q">
-        <span class="q-label"><span class="qn">15.</span>對於本次工作坊，您是否有其他意見或建議？<span class="q-note">（自由填答，非必填）</span></span>
+        <span class="q-label"><span class="qn">15.</span>對於本次工作坊，您是否有其他意見或建議？<span class="q-note">（自由填答）</span></span>
         <textarea name="suggestions" placeholder="歡迎給我們任何建議……"></textarea>
       </div>
 
@@ -223,7 +222,7 @@
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 12l2 2 4-4"></path></svg>
       </div>
       <h3>問卷已送出！</h3>
-      <p>感謝您撥冗完成「AI × 醫學教學應用工作坊」課後滿意度調查。<br>您的回饋將協助我們持續精進課程內容與活動安排。</p>
+      <p>感謝您撥冗完成「AI × 醫學教學應用工作坊」課後回饋問卷。<br>您的回饋將協助我們持續精進課程內容與活動安排。</p>
       <p style="margin-top:1rem;font-weight:700;color:var(--teal-deep);font-size:1rem">再次感謝您今天的參與，期待未來有機會與您再次相見！</p>
     </div>
   </div>
@@ -231,8 +230,8 @@
 
 <footer>
   <div class="f-logo">AI × 醫學教學應用工作坊</div>
-  115年7月18日 · 課後滿意度調查<br>
-  <span style="display:inline-block;margin-top:.5rem">© 2026 台灣醫事聯合臨床技能發展學會 · All rights reserved.</span>
+  115年7月18日 · 課後回饋問卷<br>
+  <span style="display:inline-block;margin-top:.25rem">© 2026 台灣醫事聯合臨床技能發展學會 · All rights reserved.</span>
 </footer>
 
 <script>
