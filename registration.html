@@ -168,11 +168,16 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 }
 .ava.nonmember{background:var(--amber)}
 .ava.done{background:var(--green)}
+.ava.absent{background:#9aa7b0}
 .li-txt{min-width:0;flex:1}
 .li-name{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:6px}
 .li-org{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .li-grp{font-size:11px;color:var(--teal-deep);background:var(--mint-soft);border-radius:6px;padding:1px 6px;flex:none}
+.li-tag-absent{font-size:11px;color:#fff;background:#8a96a0;border-radius:6px;padding:1px 6px;flex:none;font-weight:700}
+.list-item.isabsent .li-name{color:#8a96a0;text-decoration:line-through;text-decoration-color:#c2ccd3}
+.list-item.isabsent .li-org{color:#aab5bd}
 .li-check{width:16px;height:16px;color:var(--green);flex:none}
+.li-x{width:16px;height:16px;color:#98a4ac;flex:none}
 .list-empty{padding:30px 14px;text-align:center;color:var(--muted);font-size:13.5px}
 .list-count{padding:7px 14px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
 
@@ -188,6 +193,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 }
 .d-ava.nonmember{background:var(--amber)}
 .d-ava.done{background:var(--green)}
+.d-ava.absent{background:#9aa7b0}
 .d-name{font-size:22px;font-weight:900;letter-spacing:.02em;color:var(--navy)}
 .pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
 .pill{font-size:11.5px;font-weight:700;border-radius:99px;padding:3px 10px}
@@ -196,6 +202,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 .pill.cat{background:#eef2f1;color:var(--muted)}
 .pill.done{background:var(--green-soft);color:var(--green)}
 .pill.staff{background:var(--navy);color:#fff}
+.pill.absent{background:#8a96a0;color:#fff}
 .d-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .fld{
   background:var(--lt-teal);border:1px solid var(--border);border-radius:11px;
@@ -230,6 +237,48 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
   border:1px solid #ecc8c8;border-radius:8px;padding:6px 13px;background:#fff;
 }
 .btn-undo:hover{background:#fdf3f3}
+/* 標記不出席按鈕（次要動作） */
+.act-absent-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  border:1.5px solid #d3dae0;border-radius:12px;padding:13px;background:#fff;
+  color:#5c6b76;font-size:14.5px;font-weight:700;
+}
+.act-absent-btn:hover{background:#f4f6f8;border-color:#b9c3cb}
+.act-absent-btn svg{width:19px;height:19px;color:#8a96a0}
+/* 已標記不出席卡片 */
+.act-absent{background:#f1f4f6;border:1.5px solid #d3dae0;border-radius:12px;padding:16px}
+.act-absent .t{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:900;color:#5c6b76}
+.act-absent .t svg{width:21px;height:21px;color:#8a96a0}
+.act-absent .time{font-size:12.5px;color:var(--muted);margin-top:4px;font-variant-numeric:tabular-nums}
+.note-box{margin-top:11px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 12px}
+.note-box .note-k{font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.note-box .note-v{font-size:14px;color:var(--text);margin-top:2px;word-break:break-word;white-space:pre-wrap}
+.note-box .note-v.empty{color:#aab5bd}
+.absent-btns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
+.btn-editnote{font-size:13px;color:var(--teal-deep);border:1px solid var(--border);border-radius:8px;padding:6px 13px;background:#fff}
+.btn-editnote:hover{background:var(--lt-teal)}
+/* Modal */
+.modal-mask{
+  position:fixed;inset:0;background:rgba(10,40,44,.42);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:18px;
+}
+.modal{
+  background:#fff;border-radius:16px;padding:20px;width:100%;max-width:400px;
+  box-shadow:0 12px 40px rgba(0,0,0,.28);
+}
+.modal-h{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:12px}
+.modal-warn{background:var(--amber-soft);color:var(--amber);border-radius:9px;padding:9px 12px;font-size:12.5px;line-height:1.5;margin-bottom:12px}
+.modal-lbl{font-size:12.5px;font-weight:700;color:var(--muted)}
+.modal-ta{
+  width:100%;margin-top:6px;padding:10px 12px;font-size:14.5px;font-family:inherit;
+  border:1.5px solid var(--line);border-radius:10px;resize:vertical;min-height:70px;
+}
+.modal-ta:focus{outline:none;border-color:var(--teal)}
+.modal-btns{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+.modal-cancel{font-size:14px;color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:9px 18px;background:#fff}
+.modal-cancel:hover{background:#f4f6f8}
+.modal-ok{font-size:14px;font-weight:700;color:#fff;background:#6b7a85;border-radius:9px;padding:9px 18px}
+.modal-ok:hover{background:#5c6b76}
 .grp-only{display:block}
 .stamp{
   border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;
@@ -247,8 +296,9 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 
 /* ---------- 統計頁 ---------- */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;align-items:start}
-.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
 .counter{background:#fff;padding:16px;text-align:center}
+.counter b.absent-num{color:#8a96a0}
 .counter b{font-size:30px;font-weight:900;color:var(--navy);font-variant-numeric:tabular-nums}
 .counter span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
 .bar-row{padding:9px 16px;display:flex;align-items:center;gap:11px}
@@ -286,6 +336,8 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
 .nametag.done{background:var(--green-soft);color:var(--green);border-color:#bfe5cb}
 .nametag.wait{background:#fff;color:var(--text-mid)}
 .nametag.wait svg{color:#c2cdd6}
+.nametag.absent{background:#eef1f3;color:#8a96a0;border-color:#d3dae0;text-decoration:line-through;text-decoration-color:#bcc6cd}
+.nametag.absent svg{color:#98a4ac}
 .stats-foot{padding:10px 16px 13px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
 
 /* ---------- 設定頁 ---------- */
@@ -435,6 +487,7 @@ nav button.on{background:var(--teal);color:#fff;font-weight:700}
     <div class="counter"><b id="stTotal">0</b><span>應到總人數</span></div>
     <div class="counter"><b id="stChecked">0</b><span>已報到</span></div>
     <div class="counter"><b id="stRate">0%</b><span>報到率</span></div>
+    <div class="counter"><b id="stAbsent" class="absent-num">0</b><span>當日不出席</span></div>
   </div>
   <div class="stats-grid">
     <div class="panel">
@@ -553,13 +606,18 @@ function applyPending(serverRegs){
     const p = state.pending[k];
     if(!p) return;
     if(now - p.at > PENDING_TTL){ delete state.pending[k]; return; }
-    const raw = sr.checkedIn;
     if(p.action === 'checkin'){
-      if(raw){ delete state.pending[k]; }          // 伺服器已反映，解除保護
-      else { sr.checkedIn = true; if(!sr.checkinTime) sr.checkinTime = p.time || ''; }
-    }else{ // undo
-      if(!raw){ delete state.pending[k]; }
+      if(sr.checkedIn){ delete state.pending[k]; }
+      else { sr.checkedIn = true; sr.absent = false; sr.note=''; if(!sr.checkinTime) sr.checkinTime = p.time || ''; }
+    }else if(p.action === 'undo'){
+      if(!sr.checkedIn){ delete state.pending[k]; }
       else { sr.checkedIn = false; sr.checkinTime = ''; }
+    }else if(p.action === 'absent'){
+      if(sr.absent){ delete state.pending[k]; }
+      else { sr.absent = true; sr.checkedIn = false; sr.checkinTime=''; if(!sr.absentTime) sr.absentTime = p.time || ''; sr.note = p.note || sr.note || ''; }
+    }else if(p.action === 'undo_absent'){
+      if(!sr.absent){ delete state.pending[k]; }
+      else { sr.absent = false; sr.absentTime=''; sr.note=''; }
     }
   });
 }
@@ -686,13 +744,16 @@ function renderList(){
   }
   $('list').innerHTML = arr.map(r=>{
     const k = keyOf(r);
-    const avaCls = r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember');
-    return '<button class="list-item'+(state.selKey===k?' sel':'')+'" data-k="'+esc(k)+'">'
+    const avaCls = r.absent ? 'absent' : (r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember'));
+    return '<button class="list-item'+(state.selKey===k?' sel':'')+(r.absent?' isabsent':'')+'" data-k="'+esc(k)+'">'
       + '<div class="ava '+avaCls+'">'+esc(r.name.charAt(0))+'</div>'
       + '<div class="li-txt"><div class="li-name">'+esc(r.name)
+      + (r.absent?'<span class="li-tag-absent">不出席</span>':'')
       + (r.group?'<span class="li-grp">'+esc(r.group)+'</span>':'')+'</div>'
       + '<div class="li-org">'+esc(r.org||'—')+'</div></div>'
-      + (r.checkedIn?'<svg class="li-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':'')
+      + (r.absent
+          ? '<svg class="li-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+          : (r.checkedIn?'<svg class="li-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>':''))
       + '</button>';
   }).join('');
   $('listCount').textContent = '顯示 ' + arr.length + ' 人';
@@ -714,7 +775,7 @@ function renderDetail(){
     renderActions(null);
     return;
   }
-  const avaCls = r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember');
+  const avaCls = r.absent ? 'absent' : (r.checkedIn ? 'done' : (r.isMember ? '' : 'nonmember'));
   const prof = r.profession + (r.professionOther?('（'+r.professionOther+'）'):'');
   $('detailBody').innerHTML =
     '<div class="detail">'
@@ -725,6 +786,7 @@ function renderDetail(){
         : (r.isMember?'<span class="pill member">'+esc(r.memberType||'本會會員')+'</span>':'<span class="pill nonmember">'+esc(r.memberType||'非會員')+'</span>'))
     + (r.category?'<span class="pill cat">'+esc(r.category)+'</span>':'')
     + (r.checkedIn?'<span class="pill done">已報到</span>':'')
+    + (r.absent?'<span class="pill absent">不出席</span>':'')
     + '</div></div></div>'
     + '<div class="d-fields">'
     + fld('服務單位', r.org, ICON.org, true)
@@ -752,11 +814,25 @@ function fld(k,v,icon,full){
 function renderActions(r){
   const box = $('actionsBody');
   if(!r){
-    box.innerHTML = '<div class="act-note">選擇學員後，此處會顯示報到按鈕與組別引導。</div>';
+    box.innerHTML = '<div class="act-note">選擇學員後，此處會顯示報到與不出席按鈕、組別引導。</div>';
     return;
   }
   let html = '';
-  if(r.checkedIn){
+  if(r.absent){
+    // 已標記不出席
+    html += '<div class="act-absent"><div class="t">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>'
+      + esc(r.name)+' 已標記不出席</div>'
+      + '<div class="time">標記時間：'+esc(r.absentTime||'—')+'</div>'
+      + '<div class="note-box"><div class="note-k">備註</div><div class="note-v'+(r.note?'':' empty')+'">'+(r.note?esc(r.note):'（無備註）')+'</div></div>'
+      + '<div class="absent-btns"><button class="btn-editnote" id="btnEditNote">編輯備註</button>'
+      + '<button class="btn-undo" id="btnUndoAbsent">還原（取消不出席）</button></div></div>';
+    // 若臨時又出席，可直接報到（會跳確認）
+    html += '<button class="act-main" id="btnCheckin">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>'
+      + '<div><div class="big">'+esc(r.name)+'　臨時出席報到</div>'
+      + '<div class="sub">按下將取消不出席並記錄報到</div></div></button>';
+  }else if(r.checkedIn){
     html += '<div class="act-done"><div class="t">'
       + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.5V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14l-3-3"/></svg>'
       + esc(r.name)+' 已完成報到</div>'
@@ -768,6 +844,12 @@ function renderActions(r){
       + '<div><div class="big">'+esc(r.name)+'　完成報到</div>'
       + '<div class="sub">點按後即記錄報到時間</div></div></button>';
   }
+  // 「標記不出席」按鈕：未報到、未標記時顯示
+  if(!r.absent && !r.checkedIn){
+    html += '<button class="act-absent-btn" id="btnAbsent">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>'
+      + '標記不出席</button>';
+  }
   html += '<div class="grp-only">'
     + '<div class="stamp grp"><div class="k">組別</div>'
     + (r.group?'<div class="v">'+esc(r.group)+'</div><div class="hint">請引導至 '+esc(r.group)+' 座位區</div>'
@@ -775,16 +857,19 @@ function renderActions(r){
     + '</div></div>';
   box.innerHTML = html;
 
-  const btnC = $('btnCheckin');
-  if(btnC) btnC.onclick = () => doCheckin(r);
-  const btnU = $('btnUndo');
-  if(btnU) btnU.onclick = () => doUndo(r);
+  const btnC = $('btnCheckin');    if(btnC) btnC.onclick = () => doCheckin(r);
+  const btnU = $('btnUndo');       if(btnU) btnU.onclick = () => doUndo(r);
+  const btnA = $('btnAbsent');     if(btnA) btnA.onclick = () => openNoteModal(r, false);
+  const btnUA = $('btnUndoAbsent');if(btnUA) btnUA.onclick = () => doUndoAbsent(r);
+  const btnEN = $('btnEditNote');  if(btnEN) btnEN.onclick = () => openNoteModal(r, true);
 }
 
 /* ================= 報到動作 ================= */
 function doCheckin(r){
+  if(r.absent && !confirm('「'+r.name+'」目前為「不出席」，確定要改為報到？')) return;
   r.checkedIn = true;
   r.checkinTime = nowStr();
+  r.absent = false; r.note = ''; r.absentTime = '';
   state.pending[keyOf(r)] = { action:'checkin', at:Date.now(), time:r.checkinTime };
   postAction({ action:'checkin', name:r.name, idNumber:r.idNumber });
   toast('✓ ' + r.name + ' 報到完成' + (r.group?('｜'+r.group):''));
@@ -799,6 +884,66 @@ function doUndo(r){
   toast(r.name + ' 已取消報到');
   renderAll();
 }
+function doAbsent(r, note){
+  r.absent = true;
+  r.absentTime = nowStr();
+  r.note = note || '';
+  r.checkedIn = false; r.checkinTime = '';
+  state.pending[keyOf(r)] = { action:'absent', at:Date.now(), time:r.absentTime, note:r.note };
+  postAction({ action:'absent', name:r.name, idNumber:r.idNumber, note:r.note });
+  toast('已標記 ' + r.name + ' 不出席');
+  renderAll();
+}
+function doUndoAbsent(r){
+  if(!confirm('確定要還原「'+r.name+'」（取消不出席）嗎？')) return;
+  r.absent = false;
+  r.absentTime = '';
+  r.note = '';
+  state.pending[keyOf(r)] = { action:'undo_absent', at:Date.now() };
+  postAction({ action:'undo_absent', name:r.name, idNumber:r.idNumber });
+  toast(r.name + ' 已還原');
+  renderAll();
+}
+
+/* ================= 不出席備註 Modal（純本地，即時） ================= */
+function openNoteModal(r, isEdit){
+  const key = keyOf(r);
+  const warn = r.checkedIn ? '<div class="modal-warn">⚠ 此人目前為「已報到」，標記不出席將會取消其報到紀錄。</div>' : '';
+  const title = isEdit ? '編輯備註' : '標記不出席';
+  const cur = isEdit ? (r.note||'') : '';
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML =
+    '<div class="modal">'
+    + '<div class="modal-h">'+title+'　·　'+esc(r.name)+'</div>'
+    + warn
+    + '<label class="modal-lbl">備註（可留空）</label>'
+    + '<textarea class="modal-ta" id="mNote" rows="3" placeholder="例如：來電告知、臨時公務…">'+esc(cur)+'</textarea>'
+    + '<div class="modal-btns">'
+    + '<button class="modal-cancel" id="mCancel">取消</button>'
+    + '<button class="modal-ok" id="mOk">'+(isEdit?'儲存備註':'確定標記不出席')+'</button>'
+    + '</div></div>';
+  document.body.appendChild(mask);
+  const close = ()=>{ mask.remove(); };
+  mask.addEventListener('click', e=>{ if(e.target===mask) close(); });
+  $('mCancel').onclick = close;
+  const ta = $('mNote'); ta.focus();
+  $('mOk').onclick = ()=>{
+    const note = ta.value.trim();
+    // 重新取得最新的 r（背景更新可能已置換物件）
+    const cur2 = state.regs.find(x=>keyOf(x)===key) || r;
+    if(isEdit && cur2.absent){
+      cur2.note = note;
+      state.pending[key] = { action:'absent', at:Date.now(), time:cur2.absentTime, note:note };
+      postAction({ action:'absent', name:cur2.name, idNumber:cur2.idNumber, note:note });
+      toast(cur2.name + ' 備註已更新');
+      renderAll();
+    }else{
+      doAbsent(cur2, note);
+    }
+    close();
+  };
+}
 
 /* ================= 統計頁 ================= */
 function renderStats(){
@@ -807,6 +952,7 @@ function renderStats(){
   $('stTotal').textContent = total;
   $('stChecked').textContent = checked;
   $('stRate').textContent = total ? Math.round(checked/total*100)+'%' : '0%';
+  $('stAbsent').textContent = state.regs.filter(r=>r.absent).length;
 
   // 各組（可展開看名單）
   const groups = groupList();
@@ -887,13 +1033,16 @@ function barRowStack(r){
 /* 各組可展開列（顯示誰報到/未報到）*/
 const SVG_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 const SVG_DOT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"/></svg>';
+const SVG_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
 function groupAcc(g){
   const done = g.members.filter(m=>m.checkedIn).length;
   const all = g.members.length;
   const pct = all ? Math.round(done/all*100) : 0;
-  // 已報到在前，依筆畫排序
-  const sorted = g.members.slice().sort((a,b)=>(b.checkedIn-a.checkedIn) || collator.compare(a.name,b.name));
+  // 排序：已報到 → 未報到 → 不出席；同群依筆畫
+  const rank = m => m.checkedIn ? 0 : (m.absent ? 2 : 1);
+  const sorted = g.members.slice().sort((a,b)=>(rank(a)-rank(b)) || collator.compare(a.name,b.name));
   const tags = sorted.map(m=>{
+    if(m.absent) return '<span class="nametag absent">'+SVG_X+esc(m.name)+'</span>';
     const cls = m.checkedIn ? 'done' : 'wait';
     return '<span class="nametag '+cls+'">'+(m.checkedIn?SVG_CHECK:SVG_DOT)+esc(m.name)+'</span>';
   }).join('');
