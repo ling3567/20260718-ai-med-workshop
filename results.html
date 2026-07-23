@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>課後回饋問卷 結果分析｜AI × 醫學教學應用工作坊</title>
+<meta name="description" content="AI × 醫學教學應用工作坊 課後回饋問卷結果分析 — 115年7月18日">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#5BBFB5;--teal-dark:#3A9D8F;--teal-deep:#2e8078;
+    --navy:#1B3A5C;--light-bg:#E8F4F8;--lt-teal:#EAF8F6;--white:#fff;
+    --text:#2c3e50;--text-mid:#4a6070;--text-muted:#7a90a4;--border:#cde4eb;
+    --card-sh:0 2px 14px rgba(91,191,181,.11);
+    --track:#eef5f8;
+    --r1:#e3ebee;--r2:#bcd5da;--r3:#93c6c4;--r4:#5BBFB5;--r5:#2e8078;
+    --font:'Noto Sans TC','Microsoft JhengHei','微軟正黑體',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:21px}
+  body{font-family:var(--font);color:var(--text);background:#f7fbfc;line-height:1.7}
+  @media(max-width:760px){html{font-size:17px}}
+
+  /* ══ NAV ══ */
+  #top-nav{position:sticky;top:0;z-index:100;background:var(--navy);box-shadow:0 2px 10px rgba(27,58,92,.22)}
+  .nav-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;height:56px}
+  .nav-logo{color:var(--teal);font-weight:700;font-size:.86rem;letter-spacing:.02em;white-space:nowrap;display:flex;align-items:center;gap:.6rem}
+  .nav-logo img{height:36px;width:36px;display:block;background:#fff;border-radius:50%;padding:3px;box-shadow:0 0 0 2px rgba(91,191,181,.45);object-fit:contain;flex-shrink:0}
+  .nav-tag{color:#9fc0d8;font-size:.72rem;font-weight:500}
+  @media(max-width:560px){.nav-tag{display:none}}
+
+  /* ══ HERO ══ */
+  #hero{background:#fff;border-bottom:1px solid #e4eff4;position:relative;overflow:hidden}
+  #hero::after{content:'';position:absolute;top:0;right:0;width:42%;height:100%;background:linear-gradient(160deg,var(--lt-teal) 0%,#d4eef4 100%);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);pointer-events:none;z-index:0}
+  @media(max-width:640px){
+    #hero::after{display:none}
+    #hero{background:linear-gradient(160deg,#e9f6f8 0%,#dbeef2 100%);border-bottom:1px solid var(--border)}
+  }
+  .hero-inner{max-width:1060px;margin:0 auto;padding:2.8rem 1.4rem 2.2rem;position:relative;z-index:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--lt-teal);border:1px solid rgba(91,191,181,.35);color:var(--teal-dark);padding:.24rem .88rem;border-radius:20px;font-size:.72rem;letter-spacing:.06em;font-weight:600;margin-bottom:1rem}
+  .hero-title{font-size:clamp(1.5rem,4.2vw,2.4rem);font-weight:900;color:var(--navy);letter-spacing:.02em;line-height:1.2;margin-bottom:.5rem;max-width:640px}
+  .hero-title .x-accent{color:var(--teal)}
+  .hero-subtitle{font-size:clamp(.85rem,2vw,1rem);color:var(--teal-dark);font-weight:600}
+
+  /* ══ KPI ══ */
+  .wrap{max-width:1060px;margin:0 auto;padding:2rem 1.4rem 3rem}
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.2rem}
+  @media(max-width:760px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:#fff;border-radius:14px;padding:1.2rem 1.1rem;box-shadow:var(--card-sh);border-top:3px solid var(--teal);text-align:center}
+  .kpi-num{font-size:1.9rem;font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.01em}
+  .kpi-num .unit{font-size:.8rem;font-weight:700;color:var(--text-muted);margin-left:.12rem}
+  .kpi-lbl{font-size:.74rem;color:var(--text-muted);margin-top:.3rem;font-weight:600;letter-spacing:.03em}
+
+  /* ══ SECTION / CARD ══ */
+  .sec{margin-bottom:2.2rem}
+  .sec-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+  .sec-num{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;font-size:.9rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sec-title{font-size:1.05rem;font-weight:900;color:var(--navy);letter-spacing:.02em}
+  .card{background:#fff;border-radius:16px;padding:1.6rem;box-shadow:var(--card-sh)}
+  @media(max-width:560px){.card{padding:1.2rem 1rem}}
+  .card+.card{margin-top:1.1rem}
+  .card-title{font-size:.92rem;font-weight:800;color:var(--navy);margin-bottom:.25rem}
+  .card-sub{font-size:.74rem;color:var(--text-muted);margin-bottom:1.1rem}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  @media(max-width:820px){.two-col{grid-template-columns:1fr}}
+  .two-col .card+.card{margin-top:0}
+
+  /* ══ BAR CHART ══ */
+  .bars{display:flex;flex-direction:column;gap:.55rem}
+  .brow{display:grid;grid-template-columns:minmax(96px,auto) 1fr auto;align-items:center;gap:.7rem}
+  .blabel{font-size:.78rem;color:var(--text-mid);text-align:right;line-height:1.35}
+  .btrack{background:var(--track);border-radius:5px;height:16px;position:relative;overflow:hidden}
+  .bfill{height:100%;background:var(--teal);border-radius:0 5px 5px 0;min-width:2px}
+  /* 寬度直接寫入 style，不使用進場動畫，確保任何情況下長度都正確呈現 */
+  .bfill.deep{background:var(--teal-deep)}
+  .bval{font-size:.78rem;font-weight:800;color:var(--navy);white-space:nowrap;min-width:56px;text-align:right}
+  .bval .pct{font-size:.68rem;font-weight:600;color:var(--text-muted);margin-left:.25rem}
+  @media(max-width:560px){
+    .brow{grid-template-columns:1fr;gap:.2rem}
+    .blabel{text-align:left;font-size:.8rem}
+    .bval{text-align:left;min-width:0}
+    .brow{margin-bottom:.35rem}
+  }
+
+  /* ══ MEAN (Q3–Q12) ══ */
+  .mrow{display:grid;grid-template-columns:minmax(150px,1.1fr) 1fr auto;align-items:center;gap:.7rem;padding:.42rem 0}
+  .mlabel{font-size:.78rem;color:var(--text-mid);line-height:1.35}
+  .mlabel .qn{color:var(--teal-dark);font-weight:800;margin-right:.25rem}
+  .mtrack{background:var(--track);border-radius:5px;height:16px;overflow:hidden}
+  .mfill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));border-radius:0 5px 5px 0}
+  .mval{font-size:.82rem;font-weight:900;color:var(--navy);min-width:38px;text-align:right}
+  .scale-note{font-size:.7rem;color:var(--text-muted);text-align:right;margin-top:.6rem}
+  @media(max-width:560px){
+    .mrow{grid-template-columns:1fr auto;gap:.35rem .6rem}
+    .mtrack{grid-column:1/2}
+    .mlabel{grid-column:1/-1}
+  }
+
+  /* ══ LIKERT STACK ══ */
+  .lrow{padding:.5rem 0;border-bottom:1px solid #f1f7f9}
+  .lrow:last-child{border-bottom:none}
+  .lhead{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;margin-bottom:.32rem}
+  .lq{font-size:.78rem;color:var(--text-mid);line-height:1.35}
+  .lq .qn{color:var(--teal-dark);font-weight:800;margin-right:.25rem}
+  .lmean{font-size:.75rem;font-weight:800;color:var(--navy);white-space:nowrap}
+  .lbar{display:flex;height:16px;border-radius:5px;overflow:hidden;background:var(--track);gap:2px}
+  .lseg{min-width:2px}
+  .legend{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin-bottom:1rem}
+  .lgi{display:flex;align-items:center;gap:.32rem;font-size:.72rem;color:var(--text-mid)}
+  .swatch{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+  /* ══ 說明框 ══ */
+  .howto{background:#f4fbfb;border:1px solid rgba(91,191,181,.35);border-left:4px solid var(--teal);border-radius:11px;padding:.9rem 1.1rem;margin-bottom:1.3rem}
+  .howto-t{display:flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:800;color:var(--teal-deep);margin-bottom:.5rem}
+  .howto ul{list-style:none;display:flex;flex-direction:column;gap:.34rem}
+  .howto li{font-size:.76rem;color:var(--text-mid);line-height:1.6;display:flex;gap:.45rem;align-items:flex-start}
+  .howto li::before{content:'・';color:var(--teal);font-weight:900;flex-shrink:0}
+  .howto b{color:var(--navy)}
+  .howto .warn{color:#9a6b12;font-weight:700}
+
+  /* ══ QUOTES ══ */
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  @media(max-width:760px){.quotes{grid-template-columns:1fr}}
+  .quote{background:#f8fcfd;border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:.7rem .9rem;font-size:.8rem;color:var(--text-mid);line-height:1.65}
+  .quote.warm{border-left-color:#e0a83c;background:#fffbf3;border-color:#f0e0c0}
+
+  /* ══ FINDINGS ══ */
+  .find{display:flex;align-items:flex-start;gap:.7rem;padding:.7rem 0;border-bottom:1px solid #f1f7f9}
+  .find:last-child{border-bottom:none}
+  .find-ico{width:26px;height:26px;border-radius:8px;background:var(--lt-teal);color:var(--teal-deep);font-size:.78rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+  .find-body{font-size:.83rem;color:var(--text-mid);line-height:1.7}
+  .find-body b{color:var(--navy)}
+  .find.watch .find-ico{background:#fff3dd;color:#9a6b12}
+
+  /* ══ TOOLTIP ══ */
+  #tip{position:fixed;pointer-events:none;background:var(--navy);color:#fff;font-size:.72rem;padding:.35rem .6rem;border-radius:7px;opacity:0;transition:opacity .12s;z-index:200;white-space:nowrap;box-shadow:0 4px 14px rgba(27,58,92,.28)}
+
+  /* ══ TABLE ══ */
+  details.tbl{margin-top:1rem}
+  details.tbl summary{cursor:pointer;font-size:.75rem;color:var(--teal-deep);font-weight:700;padding:.35rem 0}
+  .tblwrap{overflow-x:auto;margin-top:.5rem}
+  table{width:100%;border-collapse:collapse;font-size:.74rem;min-width:460px}
+  th{background:var(--light-bg);color:var(--navy);font-weight:800;text-align:left;padding:.45rem .6rem;white-space:nowrap}
+  td{padding:.42rem .6rem;border-bottom:1px solid #eef6f9;color:var(--text-mid)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+  footer{background:var(--navy);color:#7a9ab8;text-align:center;padding:1.1rem 1rem;font-size:.76rem;line-height:1.5}
+  footer .f-logo{font-size:.92rem;font-weight:900;color:var(--teal);margin-bottom:.15rem}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="https://raw.githubusercontent.com/ling3567/20260718-ai-med-workshop/main/images/logo.png" alt="學會 LOGO">台灣醫事聯合臨床技能發展學會</div>
+    <span class="nav-tag">問卷結果分析</span>
+  </div>
+</nav>
+
+<header id="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">115年7月18日</span>
+    <h1 class="hero-title">AI <span class="x-accent">×</span> 醫學教學應用工作坊<br>課後回饋問卷結果分析</h1>
+    <p class="hero-subtitle">生成式AI × 人機協作 × 教學設計實作</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-num" id="k-n">36</div><div class="kpi-lbl">有效填答份數</div></div>
+    <div class="kpi"><div class="kpi-num" id="k-mean">4.78<span class="unit">/5</span></div><div class="kpi-lbl">整體平均分數</div></div>
+    <div class="kpi"><div class="kpi-num" id="k-top">98<span class="unit">%</span></div><div class="kpi-lbl">正向比例（4–5分）</div></div>
+    <div class="kpi"><div class="kpi-num" id="k-txt">30</div><div class="kpi-lbl">質性回饋則數</div></div>
+  </div>
+
+  <!-- 一、填答者輪廓 -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">一</span><span class="sec-title">填答者輪廓</span></div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">職類分布</div>
+        <div class="card-sub">n = 36</div>
+        <div class="bars" id="c-prof"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">生成式 AI 使用頻率（過去 3 個月）</div>
+        <div class="card-sub">n = 36</div>
+        <div class="bars" id="c-freq"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 二、課程滿意度 -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">二</span><span class="sec-title">課程學習與滿意度</span></div>
+    <div class="card">
+      <div class="howto">
+        <div class="howto-t">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          怎麼看這些數字
+        </div>
+        <ul>
+          <li><span><b>平均分數</b>：1＝非常不同意 ～ 5＝非常同意，為全體 36 位填答者的算術平均（各分數 × 人數加總 ÷ 36）。</span></li>
+          <li><span><b>正向比例</b>：回答 <b>4 分（同意）或 5 分（非常同意）</b>的人數佔比，數值越高代表認同者越多。</span></li>
+          <li><span><b>長條長度</b>：以 1～5 分對映 0～100%（公式 <b>(平均分數−1) ÷ 4</b>），<b>並非</b>滿意人數的百分比。</span></li>
+          <li><span class="warn">本次作答最低僅出現 3 分（普通），無任何 1～2 分，故未達正向的部分屬「普通」而非負評。</span></li>
+        </ul>
+      </div>
+      <div class="card-title">各題平均分數（Q3–Q12）</div>
+      <div class="card-sub">1＝非常不同意　5＝非常同意</div>
+      <div id="c-mean"></div>
+      <div class="scale-note">橫軸範圍 1–5 分</div>
+    </div>
+    <div class="card">
+      <div class="card-title">各題評分分布</div>
+      <div class="card-sub">每題 36 份填答之作答比例</div>
+      <div class="legend" id="c-legend"></div>
+      <div id="c-likert"></div>
+      <details class="tbl">
+        <summary>▸ 顯示數據表格</summary>
+        <div class="tblwrap"><table id="t-likert"></table></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- 三、後續需求 -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">三</span><span class="sec-title">未來學習需求</span></div>
+    <div class="card">
+      <div class="card-title">最希望進一步學習的主題（可複選）</div>
+      <div class="card-sub">n = 36，百分比為勾選該主題的填答者比例</div>
+      <div class="bars" id="c-topics"></div>
+    </div>
+  </section>
+
+  <!-- 四、質性回饋 -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">四</span><span class="sec-title">質性回饋</span></div>
+    <div class="card">
+      <div class="card-title">對您最有幫助的內容</div>
+      <div class="card-sub">共 16 則</div>
+      <div class="quotes" id="q-helpful"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">其他意見或建議</div>
+      <div class="card-sub">共 14 則</div>
+      <div class="quotes" id="q-sugg"></div>
+    </div>
+  </section>
+
+  <!-- 五、綜合發現 -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">五</span><span class="sec-title">綜合發現</span></div>
+    <div class="card" id="findings"></div>
+  </section>
+
+</div>
+
+<div id="tip"></div>
+
+<footer>
+  <div class="f-logo">AI × 醫學教學應用工作坊</div>
+  115年7月18日 · 課後回饋問卷結果分析<br>
+  <span style="display:inline-block;margin-top:.25rem">© 2026 台灣醫事聯合臨床技能發展學會 · All rights reserved.</span>
+</footer>
+
+<script>
+var N = 36;
+var DATA = {
+  profession: [["護理",13],["藥事",7],["醫事放射",4],["呼吸治療",4],["醫事檢驗",2],["聽力",2],["醫師",1],["專科護理師",1],["營養",1],["語言治療",1]],
+  freq: [["從未使用",1],["3個月內使用1～2天",2],["平均每月使用1～3天",1],["平均每週使用1～2天",4],["平均每週使用3～4天",10],["平均每週使用5天以上",18]],
+  questions: [
+    {code:"Q3",  label:"課程內容符合我的學習需求", mean:4.83, dist:[0,0,0,6,30], top2:100.0},
+    {code:"Q4",  label:"課程安排脈絡清楚",         mean:4.83, dist:[0,0,0,6,30], top2:100.0},
+    {code:"Q5",  label:"講師說明與示範清楚",       mean:4.78, dist:[0,0,0,8,28], top2:100.0},
+    {code:"Q6",  label:"實作有助掌握操作方式",     mean:4.78, dist:[0,0,0,8,28], top2:100.0},
+    {code:"Q7",  label:"進度與難易度適當",         mean:4.72, dist:[0,0,2,6,28], top2:94.4},
+    {code:"Q8",  label:"場地設備與行政支持",       mean:4.81, dist:[0,0,1,5,30], top2:97.2},
+    {code:"Q9",  label:"更了解AI教學應用",         mean:4.75, dist:[0,0,1,7,28], top2:97.2},
+    {code:"Q10", label:"有信心運用AI設計成果",     mean:4.69, dist:[0,0,2,7,27], top2:94.4},
+    {code:"Q11", label:"願意運用於教學工作",       mean:4.78, dist:[0,0,1,6,29], top2:97.2},
+    {code:"Q12", label:"整體而言感到滿意",         mean:4.83, dist:[0,0,0,6,30], top2:100.0}
+  ],
+  topics: [["AI融入教學活動設計",24],["AI協助教材或簡報製作",22],["CLI／IDE人機協作與程式工具",20],["AI協助試題與評量設計",18],["AI網頁或prototype製作",16],["生成式AI基礎應用與提示詞設計",16],["教學成果與實際案例分享",13],["AI使用倫理、隱私與資訊安全",6]],
+  helpful: ["新工具的使用","很棒","太棒了👏","使用新的AI","製作網頁，了解不同工具","製作考題與網頁互動","認識新工具","入門Antigravity 學習到一項有利的工具","都很棒","可以看到不一樣的做法","利用AI生成考題和詳解","非常有幫助","全部都很有幫助 謝謝主辦單位用心","認識更多工具協助生成較可靠的教學應用軟體，增加多元互動。","實例分享及實作","架設網站"],
+  suggestions: ["教的很棒，學到很多，謝謝安排這麼棒的課","受益良多","謝謝","課程非常棒，期待有機會繼續學習","謝謝","在操作上 可能有時候會跟不上","無","感謝辦理","課程進度可再慢一些","希望可再辦下一梯這個課程","非常棒  希望還能再舉辦","感謝主辦用心。講師講述清楚完整絕無冷場。","劉醫師講解清楚，加加上實例製作，獲益良多","無"]
+};
+var RC = ['var(--r1)','var(--r2)','var(--r3)','var(--r4)','var(--r5)'];
+var RL = ['1 非常不同意','2 不同意','3 普通','4 同意','5 非常同意'];
+
+/* ── tooltip ── */
+var tip=document.getElementById('tip');
+function bindTip(el,text){
+  el.addEventListener('mouseenter',function(){tip.textContent=text;tip.style.opacity='1';});
+  el.addEventListener('mousemove',function(e){
+    var x=e.clientX+12,y=e.clientY-30;
+    if(x+tip.offsetWidth>window.innerWidth-8)x=e.clientX-tip.offsetWidth-12;
+    tip.style.left=x+'px';tip.style.top=y+'px';
+  });
+  el.addEventListener('mouseleave',function(){tip.style.opacity='0';});
+}
+
+/* ── 橫向長條圖 ── */
+function barChart(elId,rows,opts){
+  opts=opts||{};
+  var max=Math.max.apply(null,rows.map(function(r){return r[1];}));
+  var host=document.getElementById(elId),html='';
+  rows.forEach(function(r,i){
+    var pct=(r[1]/N*100);
+    html+='<div class="brow"><div class="blabel">'+r[0]+'</div>'+
+          '<div class="btrack"><div class="bfill'+(opts.deep?' deep':'')+'" style="width:'+(r[1]/max*100).toFixed(2)+'%"></div></div>'+
+          '<div class="bval">'+r[1]+'<span class="pct">'+pct.toFixed(0)+'%</span></div></div>';
+  });
+  host.innerHTML=html;
+  host.querySelectorAll('.brow').forEach(function(row,i){
+    bindTip(row,rows[i][0]+'：'+rows[i][1]+' 人（'+(rows[i][1]/N*100).toFixed(1)+'%）');
+  });
+}
+
+/* ── 平均分數（1–5 對映 0–100%）── */
+function meanChart(){
+  var host=document.getElementById('c-mean'),html='';
+  DATA.questions.forEach(function(q){
+    var w=(q.mean-1)/4*100;
+    html+='<div class="mrow"><div class="mlabel"><span class="qn">'+q.code+'</span>'+q.label+'</div>'+
+          '<div class="mtrack"><div class="mfill" style="width:'+w.toFixed(2)+'%"></div></div>'+
+          '<div class="mval">'+q.mean.toFixed(2)+'</div></div>';
+  });
+  host.innerHTML=html;
+  host.querySelectorAll('.mrow').forEach(function(row,i){
+    var q=DATA.questions[i];
+    bindTip(row,q.code+' 平均 '+q.mean.toFixed(2)+' 分｜正向 '+q.top2.toFixed(1)+'%');
+  });
+}
+
+/* ── 評分分布堆疊條 ── */
+function likertChart(){
+  var lg='';
+  RL.forEach(function(l,i){lg+='<span class="lgi"><span class="swatch" style="background:'+RC[i]+'"></span>'+l+'</span>';});
+  document.getElementById('c-legend').innerHTML=lg;
+
+  var host=document.getElementById('c-likert'),html='';
+  DATA.questions.forEach(function(q){
+    var segs='';
+    q.dist.forEach(function(cnt,i){
+      if(cnt>0) segs+='<div class="lseg" style="width:'+(cnt/N*100).toFixed(2)+'%;background:'+RC[i]+'" data-t="'+RL[i]+'：'+cnt+' 人（'+(cnt/N*100).toFixed(1)+'%）"></div>';
+    });
+    html+='<div class="lrow"><div class="lhead"><span class="lq"><span class="qn">'+q.code+'</span>'+q.label+'</span>'+
+          '<span class="lmean">平均 '+q.mean.toFixed(2)+'｜正向 '+q.top2.toFixed(1)+'%</span></div>'+
+          '<div class="lbar">'+segs+'</div></div>';
+  });
+  host.innerHTML=html;
+  host.querySelectorAll('.lseg').forEach(function(s){bindTip(s,s.dataset.t);});
+
+  // 資料表
+  var t='<thead><tr><th>題目</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>平均</th><th>正向%</th></tr></thead><tbody>';
+  DATA.questions.forEach(function(q){
+    t+='<tr><td>'+q.code+' '+q.label+'</td>';
+    q.dist.forEach(function(c){t+='<td class="num">'+c+'</td>';});
+    t+='<td class="num"><b>'+q.mean.toFixed(2)+'</b></td><td class="num">'+q.top2.toFixed(1)+'</td></tr>';
+  });
+  document.getElementById('t-likert').innerHTML=t+'</tbody>';
+}
+
+/* ── 質性回饋 ── */
+function quotes(elId,list,warmWords){
+  var html='';
+  list.forEach(function(t){
+    var warm=warmWords && warmWords.some(function(w){return t.indexOf(w)>=0;});
+    html+='<div class="quote'+(warm?' warm':'')+'">'+t+'</div>';
+  });
+  document.getElementById(elId).innerHTML=html;
+}
+
+/* ── 綜合發現 ── */
+function findings(){
+  var qs=DATA.questions.slice().sort(function(a,b){return b.mean-a.mean;});
+  var hi=qs[0], lo=qs[qs.length-1], lo2=qs[qs.length-2];
+  var weekly=DATA.freq[3][1]+DATA.freq[4][1]+DATA.freq[5][1];
+  var items=[
+    {n:'1',t:'<b>整體滿意度高。</b>10 項評分題平均 <b>4.78 / 5</b>，正向（4–5 分）比例平均達 <b>98%</b>；其中「'+hi.label+'」等 3 題達 4.83 分為最高，且無任何一題出現 1–2 分。'},
+    {n:'2',t:'<b>填答者以護理與藥事為主。</b>護理 13 人（36%）、藥事 7 人（19%），合計逾半數；共涵蓋 10 種職類，跨專業參與度佳。'},
+    {n:'3',t:'<b>參與者多為 AI 常用者。</b>'+weekly+' 人（'+(weekly/N*100).toFixed(0)+'%）每週至少使用生成式 AI 一天以上，其中 18 人（50%）每週使用 5 天以上，僅 1 人從未使用。'},
+    {n:'4',t:'<b>需求集中於「教學應用」而非工具本身。</b>最想學的前三名為 AI 融入教學活動設計（24 人，67%）、AI 協助教材或簡報製作（22 人，61%）、CLI／IDE 人機協作與程式工具（20 人，56%）。'},
+    {n:'5',warn:true,t:'<b>可再優化：課程節奏與實作信心。</b>分數最低的兩題為「'+lo.label+'」（'+lo.mean.toFixed(2)+'）與「'+lo2.label+'」（'+lo2.mean.toFixed(2)+'），且質性回饋中出現「操作上可能有時候會跟不上」「課程進度可再慢一些」，兩者相互呼應，建議下一梯次放慢實作節奏或加入分組助教。'},
+    {n:'6',t:'<b>續辦意願明確。</b>質性回饋中多次出現「希望可再辦下一梯」「期待有機會繼續學習」，可評估規劃進階場次。'}
+  ];
+  var html='';
+  items.forEach(function(it){
+    html+='<div class="find'+(it.warn?' watch':'')+'"><div class="find-ico">'+it.n+'</div><div class="find-body">'+it.t+'</div></div>';
+  });
+  document.getElementById('findings').innerHTML=html;
+}
+
+/* ── init ── */
+barChart('c-prof',DATA.profession);
+barChart('c-freq',DATA.freq,{deep:true});
+barChart('c-topics',DATA.topics);
+meanChart();
+likertChart();
+quotes('q-helpful',DATA.helpful);
+quotes('q-sugg',DATA.suggestions,['跟不上','慢一些']);
+findings();
+document.getElementById('k-txt').textContent=DATA.helpful.length+DATA.suggestions.length;
+</script>
+</body>
+</html>
